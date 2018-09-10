@@ -45,7 +45,6 @@ all: $(NAME)
 clean:
 	@rm -rf $(OBJ_PATH)
 	@make -C libft/ clean
-	@make -C printf/ clean
 
 fclean: clean
 	@rm -rf $(NAME)
