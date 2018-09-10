@@ -23,6 +23,7 @@
 NAME	= ft_malloc
 
 SRC		+= main.c
+SRC		+= init.c
 
 OBJ_PATH = ./obj/
 OBJ_NAME = $(SRC:.c=.o)
