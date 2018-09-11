@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 12:31:57 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/11 13:41:22 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/11 14:06:22 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct	s_m_mmap
 {
     t_malloc 			*head;
 	struct s_m_mmap		*next;
-	size_t			free_space;
+	size_t				free_bits;
 }			t_m_mmap;
 
 typedef struct	s_manager

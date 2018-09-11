@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 12:30:43 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/11 13:50:30 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/11 14:14:01 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_m_mmap	*get_linked(t_m_mmap *curr, size_t chunk_size)
 	printf("hello + %zu\n", chunk_size);
 	if (!curr)
 		return init_m_mmap(chunk_size);
-	if (!curr->free_space)
+	if (!curr->free_bits)
 		curr->next = get_linked(curr->next, chunk_size);
 	return curr;
 }
@@ -44,13 +44,12 @@ void		*retrieve_large_tail(t_large_mmap *curr)
 // {
 // 	t_malloc	*block;
 // 	block = m_mmap->head;
-	
 // }
 
 //At this point an available m_mmap should exist, no mmap call would be necessary
 t_m_mmap	*retrieve_available_mmap(t_m_mmap *curr)
 {
-	if (curr->free_space) return curr;
+	if (curr->free_bits) return curr;
 	return retrieve_available_mmap(curr->next);
 }
 
@@ -72,7 +71,6 @@ void	*ft_malloc(size_t	req_size)
 	if (req_size <= SMALL)
 	{
 		manager->small = get_linked(manager->small, SMALL);
-		printf("pt: %p\n", retrieve_available_mmap(manager->small));
 		// retrieve_chunk(retrieve_available_mmap(manager->small), req_size);
 	}
 	if (req_size > SMALL)

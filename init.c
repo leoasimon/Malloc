@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/10 11:52:59 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/11 13:47:39 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/11 14:10:43 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_m_mmap			*init_m_mmap(int chunk_size)
 	m_mmap = (t_m_mmap *)mmap(NULL, get_optimal_size(chunk_size), PROT_READ|PROT_WRITE, MAP_ANON|MAP_PRIVATE, -1, 0);
 	m_mmap->head = init_malloc((t_malloc *)m_mmap, chunk_size);
 	m_mmap->next = NULL;
+	m_mmap->free_bits = get_optimal_size(chunk_size) - sizeof(t_m_mmap); //TODO: Fix this?
 	return m_mmap;
 }
 
