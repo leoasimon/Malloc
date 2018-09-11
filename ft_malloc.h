@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 12:31:57 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/10 11:56:18 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/11 13:41:22 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,39 @@
 #include "stdlib.h"
 #include <unistd.h>
 
-typedef struct	s_meta
+typedef struct	s_large_mmap
+{
+	struct s_large_mmap	*next;
+}				t_large_mmap;
+
+typedef struct	s_malloc
 {
 	unsigned char 	is_free;
-	int				len;
+	size_t			len;
 	void			*next;
-}			t_meta;
+}			t_malloc;
 
-typedef struct	s_mmeta
+typedef struct	s_m_mmap
 {
-    t_meta *head;
-    int     available_space;
-}			t_mmeta;
+    t_malloc 			*head;
+	struct s_m_mmap		*next;
+	size_t			free_space;
+}			t_m_mmap;
 
-typedef struct	s_mmmeta
+typedef struct	s_manager
 {
-    t_mmeta	*medium;
-    t_mmeta *small;
-}				t_mmmeta;
+	t_m_mmap		*tiny;
+    t_m_mmap 		*small;
+	t_large_mmap	*large;
+}				t_manager;
 
+#define TINY 32
 #define SMALL 64
-#define MEDIUM 180
+#define NB_CHUNKS 100
 #define PAGE_SIZE (getpagesize())
 
-t_meta			*init_meta(t_meta	*prev, int commanded_size);
-t_mmeta			*init_mmeta(int commanded_size);
-t_mmmeta		*init_mmmmeta(void);
+t_malloc		*init_malloc(t_malloc	*prev, int chunk_size);
+t_m_mmap		*init_m_mmap(int chunk_size);
+t_manager		*init_manager(void);
+t_large_mmap	*init_large_mmap(size_t req_size);
+void			show_alloc_mem(void);

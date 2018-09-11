@@ -6,53 +6,104 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 12:30:43 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/10 12:00:27 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/11 13:50:30 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
+t_manager	*manager = NULL;
 
-t_meta		*get_available_node(t_meta	*curr, int commanded_size)
+
+t_m_mmap	*get_linked(t_m_mmap *curr, size_t chunk_size)
 {
-	if (curr->is_free) return curr;
-	if (curr->next) return get_available_node(curr->next, commanded_size);
-	return init_meta(curr, commanded_size);
+	printf("hello + %zu\n", chunk_size);
+	if (!curr)
+		return init_m_mmap(chunk_size);
+	if (!curr->free_space)
+		curr->next = get_linked(curr->next, chunk_size);
+	return curr;
 }
 
-void	*retrieve_space(t_mmeta	*curr, int commanded_size)
+t_large_mmap	*add_large_node(t_large_mmap *curr, size_t req_size)
 {
-	t_meta	*node;
+	if (!curr)
+		return init_large_mmap(req_size);
+	curr->next = add_large_node(curr->next, req_size);
+	return curr;
+}
+
+void		*retrieve_large_tail(t_large_mmap *curr)
+{
+	if (!curr->next)
+		return curr;
+	return retrieve_large_tail(curr->next);
+}
+
+//At this point, our m_mmap has some avalaible space
+// void	*retrieve_chunk(t_m_mmap *m_mmap, size_t s)
+// {
+// 	t_malloc	*block;
+// 	block = m_mmap->head;
 	
-	node = NULL;
-	if (curr == NULL)
-		curr = init_mmeta(commanded_size);
-	node = get_available_node(curr->head, commanded_size);
-	return (node);
+// }
+
+//At this point an available m_mmap should exist, no mmap call would be necessary
+t_m_mmap	*retrieve_available_mmap(t_m_mmap *curr)
+{
+	if (curr->free_space) return curr;
+	return retrieve_available_mmap(curr->next);
 }
 
-void	*ft_malloc(size_t	s)
+void	*ft_malloc(size_t	req_size)
 {
-	static t_mmmeta	*mmmeta = NULL;
-	t_mmeta			*curr;
+	static int		debug_count = 0;
 
-	curr = NULL;
-	//Check if the base megastruct exists
-	if (mmmeta == NULL)
-		mmmeta = init_mmmmeta();
-	// Check size_t to know if we deal with SMALL, MEDIUM or LARGE
-	if (s <= SMALL)
-		return retrieve_space(mmmeta->small, SMALL);
-	if (s <= MEDIUM)
-		return retrieve_space(mmmeta->medium, MEDIUM);
-	// todo: large
+	debug_count++;
+	//Check if the base manager exists
+	if (manager == NULL)
+		manager = init_manager();
+	// Check size_t to know if we deal with SMALL, SMALL or LARGE, 
+	//...go for a nice function pointer array ?...
+	if (req_size <= TINY)
+	{
+		manager->tiny = get_linked(manager->tiny, TINY);
+		// retrieve_chunk(retrieve_available_mmap(manager->tiny), req_size);
+	}
+	if (req_size <= SMALL)
+	{
+		manager->small = get_linked(manager->small, SMALL);
+		printf("pt: %p\n", retrieve_available_mmap(manager->small));
+		// retrieve_chunk(retrieve_available_mmap(manager->small), req_size);
+	}
+	if (req_size > SMALL)
+	{
+		manager->large = add_large_node(manager->large, req_size);// check if we already have list of large mmaps
+		// attach address of large to list of larges
+		// return head of list
+		return NULL;
+		// return (retrieve_large_tail(manager->large));
+	}
 	return NULL;
 }
 
+void print_large_mmap(t_large_mmap *curr, int i)
+{
+	if (curr)
+	{
+		printf("%d: %p\n", i, curr);
+		print_large_mmap(curr->next, i + 1);
+	}
+}
 int	main(void)
 {
 	void	*alloc;
+	// alloc = ft_malloc(200);
 
-	alloc = ft_malloc(100);
-	printf("allocated memory: %p\n", alloc);
+
+	for (int i = 0; i < 15; i++) {
+		alloc = ft_malloc(200);
+	}
+	print_large_mmap(manager->large, 1);
+	// show_alloc_mem();
 	return (1);
 }
