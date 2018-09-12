@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 12:31:57 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/12 10:06:35 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/12 12:17:22 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ typedef struct	s_manager
 #define MMAP_STRUCT_SIZE (sizeof(t_m_mmap))
 #define MMAP_LG_STRUCT_SIZE (sizeof(t_large_mmap))
 #define MALLOC_STRUCT_SIZE (sizeof(t_malloc))
+#define GET_NEXT_MALLOC_ADDR(x) ((void *)x + MALLOC_STRUCT_SIZE + x->len)
 
-t_malloc		*init_malloc(t_malloc	*prev, int chunk_size);
+t_malloc		*init_malloc(void *addr, int size);
 t_m_mmap		*init_m_mmap(int chunk_size);
 t_manager		*init_manager(void);
 t_large_mmap	*init_large_mmap(size_t req_size);
