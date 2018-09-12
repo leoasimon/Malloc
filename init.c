@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/10 11:52:59 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/11 14:10:43 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/12 10:42:14 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static size_t	get_optimal_size(size_t chunk_size)
 {
 	int initial;
 	
-	initial = chunk_size * NB_CHUNKS + sizeof(t_malloc) * NB_CHUNKS + sizeof(t_m_mmap);
+	initial = chunk_size * NB_CHUNKS + MALLOC_STRUCT_SIZE * NB_CHUNKS + MMAP_STRUCT_SIZE;
 	return initial + initial % PAGE_SIZE;
 }
 
@@ -25,10 +25,11 @@ t_malloc			*init_malloc(t_malloc	*prev, int chunk_size)
 {
 	t_malloc	*m_malloc;
 
-	printf("size + struct size: %lu\n", chunk_size + sizeof(t_malloc));
-	m_malloc = prev + (chunk_size + sizeof(t_malloc));
+	printf("size + struct size: %lu\n", chunk_size + MALLOC_STRUCT_SIZE);
+	m_malloc = prev + (chunk_size + MALLOC_STRUCT_SIZE);
 	m_malloc->is_free = 1;
 	m_malloc->next = NULL;
+	m_malloc->ret_ptr = m_malloc + MALLOC_STRUCT_SIZE;
 	return m_malloc;
 }
 
@@ -38,6 +39,7 @@ t_large_mmap		*init_large_mmap(size_t req_size)
 	
 	mem_ptr = (t_large_mmap *)mmap(NULL, req_size, PROT_READ|PROT_WRITE, MAP_ANON|MAP_PRIVATE, -1, 0);
 	mem_ptr->next = NULL;
+	mem_ptr->ret_ptr = mem_ptr + MMAP_LG_STRUCT_SIZE;
 	return (mem_ptr);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 12:30:43 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/11 14:14:01 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/12 10:41:25 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,10 @@ int	main(void)
 	void	*alloc;
 	// alloc = ft_malloc(200);
 
-
 	for (int i = 0; i < 15; i++) {
 		alloc = ft_malloc(200);
 	}
 	print_large_mmap(manager->large, 1);
 	// show_alloc_mem();
-	return (1);
+	return (0);
 }

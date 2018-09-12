@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 12:31:57 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/11 14:06:22 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/12 10:06:35 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 typedef struct	s_large_mmap
 {
 	struct s_large_mmap	*next;
+	void				*ret_ptr;
 }				t_large_mmap;
 
 typedef struct	s_malloc
@@ -25,6 +26,7 @@ typedef struct	s_malloc
 	unsigned char 	is_free;
 	size_t			len;
 	void			*next;
+	void			*ret_ptr;
 }			t_malloc;
 
 typedef struct	s_m_mmap
@@ -45,6 +47,9 @@ typedef struct	s_manager
 #define SMALL 64
 #define NB_CHUNKS 100
 #define PAGE_SIZE (getpagesize())
+#define MMAP_STRUCT_SIZE (sizeof(t_m_mmap))
+#define MMAP_LG_STRUCT_SIZE (sizeof(t_large_mmap))
+#define MALLOC_STRUCT_SIZE (sizeof(t_malloc))
 
 t_malloc		*init_malloc(t_malloc	*prev, int chunk_size);
 t_m_mmap		*init_m_mmap(int chunk_size);
