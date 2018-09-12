@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 12:30:43 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/12 12:31:23 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/12 12:39:04 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,16 @@ void print_large_mmap(t_large_mmap *curr, int i)
 		print_large_mmap(curr->next, i + 1);
 	}
 }
+
+void print_m_mmap(t_m_mmap *curr, int i)
+{
+	if (curr)
+	{
+		printf("%d: %p\n", i, curr);
+		print_m_mmap(curr->next, i + 1);
+	}
+}
+
 int	main(void)
 {
 	void	*alloc;
@@ -115,6 +125,7 @@ int	main(void)
 		// printf("%d: ", i + 1);
 		alloc = ft_malloc(SMALL);
 	}
+	print_m_mmap(manager->small, 1);
 	// print_large_mmap(manager->large, 1);
 	// show_alloc_mem();
 	return (0);
