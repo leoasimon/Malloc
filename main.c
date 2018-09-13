@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 12:30:43 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/13 10:10:41 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/13 10:42:59 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	*ft_malloc(size_t	req_size)
 	if (req_size <= TINY)
 	{
 		manager->tiny = get_linked(manager->tiny, TINY);
-		// retrieve_chunk(retrieve_available_mmap(manager->tiny), req_size);
+		return (retrieve_chunk(retrieve_available_mmap(manager->tiny, req_size), req_size));
 	}
 	if (req_size <= SMALL)
 	{
@@ -98,35 +98,19 @@ void	*ft_malloc(size_t	req_size)
 	return NULL;
 }
 
-void print_large_mmap(t_large_mmap *curr, int i)
-{
-	if (curr)
-	{
-		printf("%d: %p\n", i, curr->ret_ptr);
-		print_large_mmap(curr->next, i + 1);
-	}
-}
-
-void print_m_mmap(t_m_mmap *curr, int i)
-{
-	if (curr)
-	{
-		printf("%d: %p\n", i, curr);
-		print_m_mmap(curr->next, i + 1);
-	}
-}
-
 int	main(void)
 {
 	void	*alloc;
-	// alloc = ft_malloc(200);
 
 	for (int i = 0; i < 5; i++) {
-		alloc = ft_malloc(SMALL);
-		printf("%p\n", alloc);
+		alloc = ft_malloc(TINY);
 	}
-	print_m_mmap(manager->small, 1);
-	// print_large_mmap(manager->large, 1);
-	// show_alloc_mem();
+	for (int i = 0; i < 5; i++) {
+		alloc = ft_malloc(SMALL);
+	}
+	for (int i = 0; i < 5; i++) {
+		alloc = ft_malloc(SMALL * 2);
+	}
+	show_alloc_mem();
 	return (0);
 }

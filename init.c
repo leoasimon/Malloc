@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/10 11:52:59 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/12 12:30:47 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/13 10:32:10 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_large_mmap		*init_large_mmap(size_t req_size)
 	mem_ptr = (t_large_mmap *)mmap(NULL, req_size, PROT_READ|PROT_WRITE, MAP_ANON|MAP_PRIVATE, -1, 0);
 	mem_ptr->next = NULL;
 	mem_ptr->ret_ptr = mem_ptr + MMAP_LG_STRUCT_SIZE;
+	mem_ptr->len = req_size;
 	return (mem_ptr);
 }
 
@@ -53,8 +54,8 @@ t_m_mmap			*init_m_mmap(int chunk_size)
 	m_mmap->next = NULL;
 	m_mmap->free_bits = get_optimal_size(chunk_size) - MMAP_STRUCT_SIZE; //TODO: Fix this?
 
-	printf("Fresh mmap\nfree_bits: %zu\nmmap struct size: %zu\nmalloc struct size:%zu, addr: %p\n\n", 
-	m_mmap->free_bits, MMAP_STRUCT_SIZE, MALLOC_STRUCT_SIZE, mmap);
+	// printf("Fresh mmap\nfree_bits: %zu\nmmap struct size: %zu\nmalloc struct size:%zu, addr: %p\n\n", 
+	// m_mmap->free_bits, MMAP_STRUCT_SIZE, MALLOC_STRUCT_SIZE, mmap);
 	return (m_mmap);
 }
 

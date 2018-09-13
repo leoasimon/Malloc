@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 12:31:57 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/12 12:17:22 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/13 10:31:42 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef struct	s_large_mmap
 {
 	struct s_large_mmap	*next;
 	void				*ret_ptr;
+	size_t				len;
 }				t_large_mmap;
 
 typedef struct	s_malloc

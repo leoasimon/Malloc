@@ -12,37 +12,47 @@
 
 extern t_manager	*manager;
 
-static void print_chunk(t_malloc *last, int i, size_t chunk_size)
+static void	print_mallocs(t_malloc	*curr, int *total)
 {
-	int offset;
-	t_malloc	*end;
-	
-	offset = i * sizeof(t_malloc) + (i + 1) * chunk_size;
-	end = last + offset;
-	printf("%p - %p : %d octets\n", last, end, offset / 8);
-}
-
-static void print_malloc_mem(t_malloc *curr, t_malloc *last, int i, size_t chunk_size)
-{
-	if ((last && !curr) || (last && curr->is_free))
-	{
-		print_chunk(last, i, chunk_size);
-		last = NULL;
-	}
-	if (!last && curr && curr->is_free)
-		last = curr;
 	if (curr)
-		print_malloc_mem(curr->next, last, i + 1, chunk_size);
+	{
+		printf("%p - %p : %zu octets\n", curr->ret_ptr, (void *)curr + curr->len, curr->len);
+		total += curr->len;
+		print_mallocs(curr->next, total);
+	}
 }
 
-static void show_mem(t_m_mmap *m_mmap, char *title, size_t chunk_size)
+static void	print_heap(t_m_mmap *heap, char *title, int *total)
 {
-	printf("%s: %p\n", title, m_mmap);
-	print_malloc_mem(m_mmap->head, NULL, 0, chunk_size);
+	if (heap)
+	{
+		printf("%s : %p\n", title, heap);
+		print_mallocs(heap->head, total);
+		print_heap(heap->next, title, total);
+	}
 }
 
-void	show_alloc_mem(void)
+static void	print_large_heap(t_large_mmap *heap, int *total)
 {
-	if (manager->small) show_mem(manager->small, "SMALL", SMALL);
-	if (manager->tiny) show_mem(manager->tiny, "tiny", TINY);
+	if (heap)
+	{
+		printf("%s : %p\n", "LARGE", heap);
+		printf("%p - %p : %zu octets\n", heap->ret_ptr, (void *)heap + heap->len, heap->len);
+		*total += heap->len;
+		print_large_heap(heap->next, total);
+	}
+}
+
+void		show_alloc_mem()
+{
+	int	total;
+
+	total = 0;
+	if (manager)
+	{
+		print_heap(manager->tiny, "TINY", &total);
+		print_heap(manager->small, "SMALL", &total);
+		print_large_heap(manager->large, &total);
+		printf("TOTAL: %d octets\n", total);
+	}
 }
