@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 12:30:43 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/12 12:39:04 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/13 10:10:41 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	*ft_malloc(size_t	req_size)
 	if (req_size <= SMALL)
 	{
 		manager->small = get_linked(manager->small, SMALL);
-		retrieve_chunk(retrieve_available_mmap(manager->small, req_size), req_size);
+		return (retrieve_chunk(retrieve_available_mmap(manager->small, req_size), req_size));
 	}
 	if (req_size > SMALL)
 	{
@@ -121,9 +121,9 @@ int	main(void)
 	void	*alloc;
 	// alloc = ft_malloc(200);
 
-	for (int i = 0; i < 200; i++) {
-		// printf("%d: ", i + 1);
+	for (int i = 0; i < 5; i++) {
 		alloc = ft_malloc(SMALL);
+		printf("%p\n", alloc);
 	}
 	print_m_mmap(manager->small, 1);
 	// print_large_mmap(manager->large, 1);
