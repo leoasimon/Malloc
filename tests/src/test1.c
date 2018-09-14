@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft/libft.h"
 #include "ft_malloc.h"
 
 int	main(void)
@@ -25,6 +26,8 @@ int	main(void)
 	for (int i = 0; i < 5; i++) {
 		alloc = ft_malloc(SMALL * 2);
 	}
+
+	ft_putstr("\n\n-- libft works.\n\n");
 	show_alloc_mem();
 
 	return (0);
