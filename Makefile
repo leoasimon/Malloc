@@ -51,11 +51,17 @@ $(OBJ_PATH)%.o: %.c
 # Make shared library from object files
 # symlink to simplified library name
 $(NAME): $(OBJ)
-	@$(CC) -shared -fPIC -o $(NAME) $(OBJ)
+	@$(CC) -shared -fPIC -o $(NAME) $(OBJ) -L libft -lft
 	@ln -s $(NAME) libft_malloc.so
 	@echo "[MALLOC compiled.]\n"
 
 all: $(NAME)
+
+libft:
+	@make -C libft/
+
+test:
+	@./run_tests.sh
 
 clean:
 	@rm -rf $(OBJ_PATH)
