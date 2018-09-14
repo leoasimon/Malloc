@@ -27,17 +27,18 @@ endif
 
 NAME		= libft_malloc_$(HOSTTYPE).so
 
-CC 			= gcc
+CC 			:= gcc
 
-SRC		+= malloc.c
-SRC		+= init.c
-SRC		+= show_alloc_mem.c
+SRC			+= malloc.c
+SRC			+= init.c
+SRC			+= show_alloc_mem.c
+SRC			+= free.c
 
-OBJ_PATH = ./obj/
-OBJ_NAME = $(SRC:.c=.o)
-OBJ = $(addprefix $(OBJ_PATH),$(OBJ_NAME))
+OBJ_PATH 	= ./obj/
+OBJ_NAME 	= $(SRC:.c=.o)
+OBJ 		= $(addprefix $(OBJ_PATH),$(OBJ_NAME))
 
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS		:= -Wall -Wextra -Werror
 
 # To make .o files (-c) in another folder
 # -O0: Optimized for compilation time
@@ -58,7 +59,7 @@ $(NAME): $(OBJ)
 all: $(NAME)
 
 libft:
-	@make -C libft/
+	@make -C libft/ all
 
 test:
 	@rm -rf tests/bin

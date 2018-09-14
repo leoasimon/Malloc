@@ -9,8 +9,8 @@ gcc -I. -I./libft/ $testsrc/sandbox.c -L/$(pwd) -lft_malloc -L libft -lft -o $te
 printf "\n------- Starting Tests -------"
 
 
-# printf "\n------- sandbox -------"
-# $testbin/sandbox
+printf "\n------- sandbox -------"
+$testbin/sandbox
 
 # printf "\n------- test0 -------\n"
 # gcc -o $testbin/test0 $testsrc/test0.c

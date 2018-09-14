@@ -56,7 +56,7 @@ t_m_mmap	*retrieve_available_mmap(t_m_mmap *curr, size_t s)
 	return retrieve_available_mmap(curr->next, s);
 }
 
-void	*ft_malloc(size_t	req_size)
+void	*malloc(size_t	req_size)
 {
 	static int		debug_count = 0;
 
