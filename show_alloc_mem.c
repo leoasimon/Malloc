@@ -8,7 +8,8 @@
 /*   Updated: 2018/09/11 09:44:04 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "ft_malloc.h"
+
+#include "malloc.h"
 
 extern t_manager	*manager;
 

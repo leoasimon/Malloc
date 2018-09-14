@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_malloc.h                                        :+:      :+:    :+:   */
+/*   malloc.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 12:31:57 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/13 10:31:42 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/14 12:44:04 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_MALLOC_H
-# define FT_MALLOC_H
+#ifndef MALLOC_H
+# define MALLOC_H
 
 #include <sys/mman.h>
 #include "stdio.h"
@@ -48,8 +48,8 @@ typedef struct	s_manager
 	t_large_mmap	*large;
 }				t_manager;
 
-#define TINY 32
-#define SMALL 64
+#define TINY 128
+#define SMALL 1200
 #define NB_CHUNKS 100
 #define PAGE_SIZE (getpagesize())
 #define MMAP_STRUCT_SIZE (sizeof(t_m_mmap))

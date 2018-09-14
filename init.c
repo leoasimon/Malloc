@@ -6,11 +6,11 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/10 11:52:59 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/13 10:32:10 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/14 12:43:01 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_malloc.h"
+#include "malloc.h"
 
 // return the optimal size for a new m_mmap allocation, chunk_size should be TINY, SMALL or LARGE
 static size_t	get_optimal_size(size_t chunk_size)

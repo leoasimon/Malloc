@@ -61,6 +61,7 @@ libft:
 	@make -C libft/
 
 test:
+	@rm -rf tests/bin
 	@mkdir tests/bin
 	@./run_tests.sh
 

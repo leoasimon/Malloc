@@ -1,4 +1,4 @@
-#include "ft_malloc.h"
+#include "malloc.h"
 t_manager	*manager = NULL;
 
 t_m_mmap		*get_linked(t_m_mmap *curr, size_t chunk_size)
