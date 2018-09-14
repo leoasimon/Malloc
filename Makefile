@@ -18,11 +18,18 @@
 # VARIABLES |
 # ----------------------------------------------------------------------------
 
+
+ifeq ($(HOSTTYPE),)
+	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
+endif
+
 .PHONY: all, clean, fclean, re
 
-NAME	= ft_malloc
+NAME		= libft_malloc_$(HOSTTYPE).so
 
-SRC		+= main.c
+CC 			= gcc
+
+SRC		+= malloc.c
 SRC		+= init.c
 SRC		+= show_alloc_mem.c
 
@@ -32,25 +39,29 @@ OBJ = $(addprefix $(OBJ_PATH),$(OBJ_NAME))
 
 CFLAGS	= -Wall -Wextra -Werror
 
+# To make .o files (-c) in another folder
+# -O0: Optimized for compilation time
+# -g:  generate debugger info
 $(OBJ_PATH)%.o: %.c
 	@mkdir -p $(OBJ_PATH)
-	@gcc $(CFLAGS) -o $@ -c $<
+	@$(CC) -c -o $@ $(CFLAGS) $^ -O0 -g
+	@echo "Finished making .o files"
 	@echo -n .
 
+# Make shared library from object files
+# symlink to simplified library name
 $(NAME): $(OBJ)
-	@echo "\n[${GREEN}$(NAME) done${RESET}.]"
-	@make -C libft/
-	@gcc $(OBJ) -o $(NAME) -L libft -lft
+	@$(CC) -shared -fPIC -o $(NAME) $(OBJS) -L libft -lft
+	@ln -s $(NAME) libft_malloc.so
+	@echo "[MALLOC compiled.]\n"
 
 all: $(NAME)
 
 clean:
 	@rm -rf $(OBJ_PATH)
-	@make -C libft/ clean
+	@rm -f libft_malloc.so
 
 fclean: clean
 	@rm -rf $(NAME)
 
 re: fclean $(NAME)
-	@make -C libft/ re
-	@make -C printf/ re

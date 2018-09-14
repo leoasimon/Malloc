@@ -10,6 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef FT_MALLOC_H
+# define FT_MALLOC_H
+
 #include <sys/mman.h>
 #include "stdio.h"
 #include "stdlib.h"
@@ -53,8 +56,12 @@ typedef struct	s_manager
 #define MALLOC_STRUCT_SIZE (sizeof(t_malloc))
 #define GET_NEXT_MALLOC_ADDR(x) ((void *)x + MALLOC_STRUCT_SIZE + x->len)
 
+void			*ft_malloc(size_t	req_size);
 t_malloc		*init_malloc(void *addr, int size);
 t_m_mmap		*init_m_mmap(int chunk_size);
 t_manager		*init_manager(void);
 t_large_mmap	*init_large_mmap(size_t req_size);
 void			show_alloc_mem(void);
+
+
+#endif
