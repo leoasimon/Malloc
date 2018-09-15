@@ -6,7 +6,7 @@
 /*   By: ekelen <ekelen@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/14 14:22:19 by ekelen            #+#    #+#             */
-/*   Updated: 2018/09/14 15:20:28 by ekelen           ###   ########.fr       */
+/*   Updated: 2018/09/15 08:36:51 by ekelen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int             find_alloc_in_list(void *ptr, t_malloc *curr, int *call_munmap)
     if (!curr->is_free) {
         *call_munmap = 0;
     }
+
+    // TODO: Look at rest of list to see if we should call_munmap
     return find_alloc_in_list(ptr, curr->next, call_munmap);
 }
 
