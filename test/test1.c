@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test2.c                                            :+:      :+:    :+:   */
+/*   test1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: byoung-w <byoung-w@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/14 12:05:14 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/14 12:42:18 by lsimon           ###   ########.fr       */
+/*   Created: 2014/09/08 14:49:06 by byoung-w          #+#    #+#             */
+/*   Updated: 2014/09/08 14:49:10 by byoung-w         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../malloc.h"
+#include "../malloc.h"
 
-int main(void)
+int		main(void)
 {
-   int   i;
-   char  *addr;
+	int		i;
+	char	*addr;
 
-   i = 0;
-   addr = NULL;
-   while (i < 1024)
-   {
-      addr = (char*)malloc(1024);
-      addr[0] = 42;
-      i++;
-   }
-   return (0);
+	i = 0;
+	while (i < 1024)
+	{
+		addr = (char*)malloc(1024);
+		addr[0] = 42;
+		i++;
+	}
+	return (0);
 }

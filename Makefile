@@ -62,13 +62,11 @@ libft:
 	@make -C libft/ all
 
 test:
-	@rm -rf tests/bin
-	@mkdir tests/bin
-	@./run_tests.sh
+	@sh ./test/run.sh
 
 clean:
 	@rm -rf $(OBJ_PATH)
-	@rm -rf tests/bin
+	@rm -rf test/bin
 	@rm -f libft_malloc.so
 
 fclean: clean
