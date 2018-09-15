@@ -44,7 +44,7 @@ static void	print_large_heap(t_large_mmap *heap, int *total)
 	}
 }
 
-void		show_alloc_mem()
+void		show_alloc_mem(void)
 {
 	int	total;
 

@@ -33,6 +33,7 @@ SRC			+= malloc.c
 SRC			+= init.c
 SRC			+= show_alloc_mem.c
 SRC			+= free.c
+SRC			+= realloc.c
 
 OBJ_PATH 	= ./obj/
 OBJ_NAME 	= $(SRC:.c=.o)
@@ -62,7 +63,8 @@ libft:
 	@make -C libft/ all
 
 test:
-	@sh ./test/run.sh
+	@./test/run.sh
+	@./test/sandbox.sh
 
 clean:
 	@rm -rf $(OBJ_PATH)
@@ -73,3 +75,5 @@ fclean: clean
 	@rm -rf $(NAME)
 
 re: fclean $(NAME)
+
+.PHONY: test

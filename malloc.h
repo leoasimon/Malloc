@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   malloc.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekelen <ekelen@student.42.us.org>          +#+  +:+       +#+        */
+/*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 12:31:57 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/14 14:55:32 by ekelen           ###   ########.fr       */
+/*   Updated: 2018/09/15 11:00:42 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 # define MALLOC_H
 
 #include <sys/mman.h>
-#include "stdio.h"
-#include "stdlib.h"
-#include <unistd.h>
+#include <stdio.h>
 #include "libft/libft.h"
 
 typedef struct	s_large_mmap
@@ -40,6 +38,7 @@ typedef struct	s_m_mmap
     t_malloc 			*head;
 	struct s_m_mmap		*next;
 	size_t				free_bits;
+	size_t				len;
 }			t_m_mmap;
 
 typedef struct	s_manager
@@ -59,12 +58,15 @@ typedef struct	s_manager
 #define GET_NEXT_MALLOC_ADDR(x) ((void *)x + MALLOC_STRUCT_SIZE + x->len)
 
 void			*malloc(size_t	req_size);
+void			*realloc(void *ptr, size_t size);
 void       		free(void *ptr);
+void			show_alloc_mem(void);
+
+
 t_malloc		*init_malloc(void *addr, int size);
 t_m_mmap		*init_m_mmap(int chunk_size);
 t_manager		*init_manager(void);
 t_large_mmap	*init_large_mmap(size_t req_size);
-void			show_alloc_mem(void);
 
 
 #endif
