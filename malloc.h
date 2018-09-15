@@ -6,7 +6,7 @@
 /*   By: ekelen <ekelen@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 12:31:57 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/15 17:28:51 by ekelen           ###   ########.fr       */
+/*   Updated: 2018/09/15 17:37:04 by ekelen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ typedef struct	s_manager
 	t_stock 	*small;
 	t_malloc	*large;
 }				t_manager;
+
+enum {
+  TINY = 128,
+  SMALL = 1200,
+} e_chunk_size;
 
 #define TINY 128
 #define SMALL 1200
