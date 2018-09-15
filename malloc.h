@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   malloc.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ekelen <ekelen@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 12:31:57 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/15 11:00:42 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/15 16:00:00 by ekelen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,43 +17,34 @@
 #include <stdio.h>
 #include "libft/libft.h"
 
-typedef struct	s_large_mmap
-{
-	unsigned char		is_free;
-	struct s_large_mmap	*next;
-	void				*ret_ptr;
-	size_t				len;
-}				t_large_mmap;
-
 typedef struct	s_malloc
 {
-	unsigned char 	is_free;
-	size_t			len;
-	struct s_malloc			*next;
-	void			*ret_ptr;
+	unsigned char 		is_free;
+	size_t				len;
+	struct s_malloc		*next;
+	void				*ret_ptr;
 }			t_malloc;
 
-typedef struct	s_m_mmap
+typedef struct	s_stock
 {
     t_malloc 			*head;
-	struct s_m_mmap		*next;
+	struct s_stock		*next;
 	size_t				free_bits;
 	size_t				len;
-}			t_m_mmap;
+}			t_stock;
 
 typedef struct	s_manager
 {
-	t_m_mmap		*tiny;
-    t_m_mmap 		*small;
-	t_large_mmap	*large;
+	t_stock		*tiny;
+	t_stock 	*small;
+	t_malloc	*large;
 }				t_manager;
 
 #define TINY 128
 #define SMALL 1200
 #define NB_CHUNKS 100
 #define PAGE_SIZE (getpagesize())
-#define MMAP_STRUCT_SIZE (sizeof(t_m_mmap))
-#define MMAP_LG_STRUCT_SIZE (sizeof(t_large_mmap))
+#define STOCK_STRUCT_SIZE (sizeof(t_stock))
 #define MALLOC_STRUCT_SIZE (sizeof(t_malloc))
 #define GET_NEXT_MALLOC_ADDR(x) ((void *)x + MALLOC_STRUCT_SIZE + x->len)
 
@@ -64,9 +55,9 @@ void			show_alloc_mem(void);
 
 
 t_malloc		*init_malloc(void *addr, int size);
-t_m_mmap		*init_m_mmap(int chunk_size);
+t_stock			*init_stock(int chunk_size);
 t_manager		*init_manager(void);
-t_large_mmap	*init_large_mmap(size_t req_size);
+t_malloc		*init_large_mmap(size_t req_size);
 
 
 #endif

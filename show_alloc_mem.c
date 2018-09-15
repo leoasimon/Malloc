@@ -23,7 +23,7 @@ static void	print_mallocs(t_malloc	*curr, int *total)
 	}
 }
 
-static void	print_heap(t_m_mmap *heap, char *title, int *total)
+static void	print_heap(t_stock *heap, char *title, int *total)
 {
 	if (heap)
 	{
@@ -33,7 +33,7 @@ static void	print_heap(t_m_mmap *heap, char *title, int *total)
 	}
 }
 
-static void	print_large_heap(t_large_mmap *heap, int *total)
+static void	print_large_heap(t_malloc *heap, int *total)
 {
 	if (heap)
 	{

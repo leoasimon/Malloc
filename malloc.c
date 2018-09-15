@@ -1,16 +1,16 @@
 #include "malloc.h"
 t_manager	*manager = NULL;
 
-t_m_mmap		*get_linked(t_m_mmap *curr, size_t chunk_size)
+t_stock		*get_linked(t_stock *curr, size_t chunk_size)
 {
 	if (!curr)
-		return init_m_mmap(chunk_size);
+		return init_stock(chunk_size);
 	if (curr->free_bits < chunk_size + MALLOC_STRUCT_SIZE)
 		curr->next = get_linked(curr->next, chunk_size);
 	return curr;
 }
 
-t_large_mmap	*add_large_node(t_large_mmap *curr, size_t req_size)
+t_malloc	*add_large_node(t_malloc *curr, size_t req_size)
 {
 	if (!curr)
 		return init_large_mmap(req_size);
@@ -18,7 +18,7 @@ t_large_mmap	*add_large_node(t_large_mmap *curr, size_t req_size)
 	return curr;
 }
 
-void		*retrieve_large_tail(t_large_mmap *curr)
+void		*retrieve_large_tail(t_malloc *curr)
 {
 	if (!curr->next)
 		return curr->ret_ptr;
@@ -41,16 +41,16 @@ void	*get_ret_ptr(t_malloc *curr)
 }
 
 //At this point, our m_mmap has some avalaible space
-void	*retrieve_chunk(t_m_mmap *m_mmap, size_t s)
+void	*retrieve_chunk(t_stock *m_mmap, size_t s)
 {
 	//dummy malloc, push new malloc to the end of the heap
-	m_mmap->head = get_updated_head(m_mmap->head, s, (void *)m_mmap + MMAP_STRUCT_SIZE);
+	m_mmap->head = get_updated_head(m_mmap->head, s, (void *)m_mmap + STOCK_STRUCT_SIZE);
 	m_mmap->free_bits -= s + MALLOC_STRUCT_SIZE;
 	return get_ret_ptr(m_mmap->head);
 }
 
 //At this point an available m_mmap should exist, no mmap call would be necessary
-t_m_mmap	*retrieve_available_mmap(t_m_mmap *curr, size_t s)
+t_stock	*retrieve_available_mmap(t_stock *curr, size_t s)
 {
 	if (curr->free_bits >= s + MALLOC_STRUCT_SIZE) return curr;
 	return retrieve_available_mmap(curr->next, s);

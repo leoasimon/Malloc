@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   realloc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ekelen <ekelen@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 09:43:28 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/15 11:52:45 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/15 15:53:47 by ekelen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	*find_alloc_in_list(void *ptr, t_malloc *curr)
     return find_alloc_in_list(ptr, curr->next);
 }
 
-static void	*locate_ptr(t_m_mmap *curr, void *ptr)
+static void	*locate_ptr(t_stock *curr, void *ptr)
 {
 	if (curr)
 	{
@@ -48,7 +48,7 @@ static void	*locate_ptr_in_heaps(void	*ptr)
 	if (!found_ptr)
 		found_ptr = locate_ptr(manager->small, ptr);
 	if (!found_ptr)
-		found_ptr = locate_ptr((t_m_mmap *)manager->large, ptr); //Ugly cast
+		found_ptr = locate_ptr((t_stock *)manager->large, ptr); //Ugly cast
 	return(found_ptr);
 }
 
