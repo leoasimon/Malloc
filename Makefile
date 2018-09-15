@@ -67,12 +67,16 @@ test:
 	@python ./test/test.py
 	@echo "\n${GREEN} SANDBOX ${RESET}"
 	@sh ./sandbox/run.sh
-	@python ./sandbox/test.py
+	@cp $(NAME) ./sandbox/
+	@./sandbox/test.py
 
-clean:
-	@rm -rf $(OBJ_PATH)
+cleantests:
 	@rm -rf test/bin
 	@rm -rf sandbox/bin
+	@rm -f ./sandbox/$(NAME)
+
+clean: cleantests
+	@rm -rf $(OBJ_PATH)
 	@rm -f libft_malloc.so
 
 fclean: clean

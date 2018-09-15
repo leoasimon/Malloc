@@ -39,8 +39,19 @@ for f in test_files:
     com = "gcc -Wno-unused-result -o " + bin_folder + output_file + " " + f + " -I " + lib_inc
     cmd.call(com.split())
     com = "sh ./run.sh ./" + bin_folder + output_file
-    output, errput = cmd_output(com.split())
-    print("####### " + output_file + " #######")
+    output = cmd_output_only(com.split())
+    com = "gcc"+ " -L../ " + " -Wall -Wno-unused-result -o " + bin_folder + output_file + " " + f + " -lft_malloc"
+    cmd.call(com.split())
+    com = "./" + bin_folder + output_file
+    output, puterr = cmd_output(com.split())
+    print("-----------------------------------\n")
+    print("####### " + output_file + " #######\n")
     print(output)
-    print(errput)
+    print("\033[91m" + puterr + "\033[0m\n")
+
+# com = "gcc"+ " -L../ " + " -Wall -Wno-unused-result -o " + bin_folder + "sandbox0" + " " + "sandbox0.c" + " -lft_malloc"
+# cmd.call(com.split())
+# com = "./" + bin_folder + "sandbox0"
+# output = cmd_output_only(com.split())
+# print(output)
 

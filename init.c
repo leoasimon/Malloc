@@ -6,7 +6,7 @@
 /*   By: ekelen <ekelen@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/10 11:52:59 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/15 15:56:38 by ekelen           ###   ########.fr       */
+/*   Updated: 2018/09/15 17:17:05 by ekelen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ static size_t	get_optimal_size(size_t chunk_size)
 	return initial + initial % PAGE_SIZE;
 }
 
-t_malloc			*init_malloc(void *addr, int size)
+t_malloc			*init_malloc(void *addr, size_t req_size)
 {
 	t_malloc	*m_malloc;
 
 	m_malloc = (t_malloc *)addr;
 	m_malloc->is_free = 0;
-	m_malloc->len = size;
+	m_malloc->len = req_size;
 	m_malloc->next = NULL;
 	m_malloc->ret_ptr = m_malloc + MALLOC_STRUCT_SIZE;
 	return m_malloc;

@@ -25,11 +25,11 @@ void		*retrieve_large_tail(t_malloc *curr)
 	return retrieve_large_tail(curr->next);
 }
 
-t_malloc	*get_updated_head(t_malloc *curr, size_t s, void *pot_addr)
+t_malloc	*get_updated_head(t_malloc *curr, size_t req_size, void *pot_addr)
 {
 	if (!curr)
-		return (init_malloc(pot_addr, s));
-	curr->next = get_updated_head(curr->next, s, GET_NEXT_MALLOC_ADDR(curr));
+		return (init_malloc(pot_addr, req_size));
+	curr->next = get_updated_head(curr->next, req_size, GET_NEXT_MALLOC_ADDR(curr));
 	return (curr);
 }
 
@@ -40,20 +40,20 @@ void	*get_ret_ptr(t_malloc *curr)
 	return curr->ret_ptr;
 }
 
-//At this point, our m_mmap has some avalaible space
-void	*retrieve_chunk(t_stock *m_mmap, size_t s)
+//At this point, our stock has some avalaible space
+void	*retrieve_chunk(t_stock *stock, size_t req_size)
 {
 	//dummy malloc, push new malloc to the end of the heap
-	m_mmap->head = get_updated_head(m_mmap->head, s, (void *)m_mmap + STOCK_STRUCT_SIZE);
-	m_mmap->free_bits -= s + MALLOC_STRUCT_SIZE;
-	return get_ret_ptr(m_mmap->head);
+	stock->head = get_updated_head(stock->head, req_size, (void *)stock + STOCK_STRUCT_SIZE);
+	stock->free_bits -= req_size + MALLOC_STRUCT_SIZE;
+	return get_ret_ptr(stock->head);
 }
 
 //At this point an available m_mmap should exist, no mmap call would be necessary
-t_stock	*retrieve_available_mmap(t_stock *curr, size_t s)
+t_stock	*retrieve_available_mmap(t_stock *curr, size_t req_size)
 {
-	if (curr->free_bits >= s + MALLOC_STRUCT_SIZE) return curr;
-	return retrieve_available_mmap(curr->next, s);
+	if (curr->free_bits >= req_size + MALLOC_STRUCT_SIZE) return curr;
+	return retrieve_available_mmap(curr->next, req_size);
 }
 
 void	*malloc(size_t	req_size)
