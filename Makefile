@@ -47,7 +47,6 @@ CFLAGS		:= -Wall -Wextra -Werror
 $(OBJ_PATH)%.o: %.c
 	@mkdir -p $(OBJ_PATH)
 	@$(CC) -c -o $@ $(CFLAGS) $^ -O0 -g
-	@echo "Finished making .o files"
 	@echo -n .
 
 # Make shared library from object files
@@ -63,12 +62,17 @@ libft:
 	@make -C libft/ all
 
 test:
-	@./test/run.sh
-	@./test/sandbox.sh
+	@echo "\n${MAGENTA} SCHOOL TESTS ${RESET}"
+	@sh ./test/run.sh
+	@python ./test/test.py
+	@echo "\n${GREEN} SANDBOX ${RESET}"
+	@sh ./sandbox/run.sh
+	@python ./sandbox/test.py
 
 clean:
 	@rm -rf $(OBJ_PATH)
 	@rm -rf test/bin
+	@rm -rf sandbox/bin
 	@rm -f libft_malloc.so
 
 fclean: clean

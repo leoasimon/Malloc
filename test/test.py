@@ -93,7 +93,7 @@ elif pr2 < pr1:
     print("Free is functioning.")
 else:
     print("The free does not work.")
-print("");
+print("")
 #############################################################
 # Realloc
 print("#####Test realloc")
