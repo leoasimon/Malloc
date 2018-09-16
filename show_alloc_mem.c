@@ -15,10 +15,13 @@ extern t_manager	*manager;
 
 static void	print_mallocs(t_malloc	*curr, int *total)
 {
-	if (curr && !curr->is_free)
+	if (curr)
 	{
-		printf("%p - %p : %zu octets\n", curr->ret_ptr, (void *)curr + curr->len, curr->len);
-		total += curr->len;
+		if (!curr->is_free)
+		{
+			printf("%p - %p : %zu octets\n", curr->ret_ptr, (void *)curr + curr->len, curr->len);
+			*total += curr->len;
+		}
 		print_mallocs(curr->next, total);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 09:43:28 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/16 12:40:37 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/16 14:13:03 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	*locate_ptr_in_heaps(void	*ptr)
 void clear_allocated_mem(t_malloc	*ptr)
 {
 	ptr->is_free = 1;
-	ft_bzero(ptr->ret_ptr, ptr->len);
+	// ft_bzero(ptr->ret_ptr, 100);
 }
 
 void	split_space(t_malloc *ptr, size_t size, size_t size_remaining)

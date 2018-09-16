@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/16 12:41:20 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/16 13:49:42 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/16 15:10:17 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,19 @@ static void	*find_alloc_in_list(void *ptr, t_malloc *curr, t_malloc *start)
     return find_alloc_in_list(ptr, curr->next, start);
 }
 
-static void	*locate_ptr(t_stock *curr, void *ptr, t_stock *last)
+static void clear_allocated_mem(t_malloc	*ptr)
+{
+	void	*p;
+	
+	p = ptr->ret_ptr;
+	ptr->is_free = 1;
+	ft_bzero(ptr->ret_ptr, ptr->len); //TODO: fix it, currently overriding next struct
+}
+
+static void	*free_and_update(t_stock *curr, void *ptr)
 {
 	t_malloc	*found_ptr;
+	t_stock		*next;
 	
 	if (curr)
 	{
@@ -53,41 +63,20 @@ static void	*locate_ptr(t_stock *curr, void *ptr, t_stock *last)
 			found_ptr = (t_malloc *)find_alloc_in_list(ptr, curr->head, NULL); //may not work with large
 			if (found_ptr == curr->head && found_ptr->next == NULL)
 			{
-				if (last)
-					last->next = curr->next;
+				printf("Should munmap\n");
+				next = curr->next;
 				munmap(curr, curr->len);
-				return NULL;
+				return next;
 			}
-			return found_ptr;
+			clear_allocated_mem(found_ptr);
+			return curr;
 		}
-		return locate_ptr(curr->next, ptr, curr);
+		curr->next = free_and_update(curr->next, ptr);
 	}
-	return NULL;
-}
-
-static void	*locate_ptr_in_heaps(void	*ptr)
-{
-	void	*found_ptr;
-	found_ptr = locate_ptr(manager->tiny, ptr, NULL);
-	if (!found_ptr)
-		found_ptr = locate_ptr(manager->small, ptr, NULL);
-	if (!found_ptr)
-		found_ptr = locate_ptr((t_stock *)manager->large, ptr, NULL); //Ugly cast
-	return(found_ptr);
-}
-
-static void clear_allocated_mem(t_malloc	*ptr)
-{
-	ptr->is_free = 1;
-	ft_bzero(ptr->ret_ptr, ptr->len);
+	return curr;
 }
 
 void	free(void	*ptr)
 {
-	t_malloc	*found_ptr;
-	
-	found_ptr = locate_ptr_in_heaps(ptr);
-	if (found_ptr)
-		clear_allocated_mem(found_ptr);
-	//if ptr not found, fail silently
+	manager->small = free_and_update(manager->small, ptr);
 }

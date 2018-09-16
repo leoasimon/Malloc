@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   malloc.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekelen <ekelen@student.42.us.org>          +#+  +:+       +#+        */
+/*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 12:31:57 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/15 17:37:04 by ekelen           ###   ########.fr       */
+/*   Updated: 2018/09/16 14:59:08 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ typedef struct	s_malloc
 {
 	unsigned char 		is_free;
 	size_t				len;
-	struct s_malloc		*next;
 	struct s_malloc		*prev;
 	void				*ret_ptr;
+	struct s_malloc		*next;
 }			t_malloc;
 
 typedef struct	s_stock
