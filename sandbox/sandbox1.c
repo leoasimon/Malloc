@@ -15,8 +15,10 @@
 int	main(void)
 {
 	char	*str;
+	int 	i;
 
 	str = (char *)malloc(10);
+	(void) i;
 	printf("ptr: %p\n", str);
 	return(0);
 }

@@ -54,6 +54,7 @@ static void	*locate_ptr_in_heaps(void	*ptr)
 
 void clear_allocated_mem(t_malloc	*ptr)
 {
+	ptr->is_free = 1;
 	ft_bzero(ptr->ret_ptr, ptr->len);
 }
 
@@ -61,28 +62,32 @@ void clear_allocated_mem(t_malloc	*ptr)
 // {
 // 	t_malloc	*new_block;
 
-// 	new_block = init_malloc((void *)(ptr->ret_ptr) + )
-// }
-
 void	*realloc(void	*ptr, size_t size)
 {
-	void	*found_ptr;
-	int		available_space;
+	t_malloc	*found_ptr;
+	size_t		available_space;
+	t_malloc	*new_malloc;
 	
 	found_ptr = locate_ptr_in_heaps(ptr);
 	if (found_ptr)
 	{
 		printf("found: %p, %zu\n", ptr, size);
-		//Todo: new size < old size: keep same pointer and split thing
-		clear_allocated_mem(ptr);
-		available_space = ((t_malloc *)found_ptr)->len - MALLOC_STRUCT_SIZE - size;
+		if (size <= found_ptr->len) 
+		{
+			available_space = (found_ptr)->len - MALLOC_STRUCT_SIZE - size;
+			if (available_space >= 4) 
+			{
+				// TODO: split
+				return (found_ptr);
+			}
+			return (found_ptr);
+		}
 		// if (available_space > 4)
-		// 	split_mem(ptr, size);
-
-		//Todo: new size > old size: try to extend current allocated memory, free and re malloc otherwise
+		new_malloc = malloc(size);
+		ft_memcpy(new_malloc, found_ptr, size);
+		clear_allocated_mem(ptr);
+		return new_malloc;
 	}
-	//if ptr not found, null or not enough space to do a smart realloc, just return a new malloc
-	//previous malloc must be freed thought 
-	// return malloc(size);
-	return NULL;
+	//if ptr not found, null, just return a new malloc
+	return malloc(size);
 }

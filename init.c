@@ -58,7 +58,7 @@ t_stock			*init_stock(int chunk_size)
 	stock->free_bits = optimal_size - STOCK_STRUCT_SIZE; //TODO: Fix this?
 	stock->len = optimal_size;
 
-	printf("Fresh mmap: start: %p, len: %zu, end: %p\n\n", stock, stock->len, (void *)stock + stock->len);
+	printf("Fresh stock: start: %p, len: %zu, end: %p\n\n", stock, stock->len, (void *)stock + stock->len);
 	return (stock);
 }
 
