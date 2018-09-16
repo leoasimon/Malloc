@@ -23,7 +23,7 @@ int	main(void)
 	ptr3 = malloc(SMALL);
 	show_alloc_mem();
 	free(ptr);
-	show_alloc_mem();
-	free(ptr3);
-	show_alloc_mem();
+	// show_alloc_mem();
+	// free(ptr3);
+	// show_alloc_mem();
 }
