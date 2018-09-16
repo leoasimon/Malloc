@@ -10,7 +10,8 @@ import shlex
 os.chdir(os.path.dirname(os.path.abspath(sys.argv[0])))
 
 bin_folder = "bin/"
-test_files = ["sandbox0.c", "sandbox1.c", "sandbox2.c"]
+# test_files = ["sandbox0.c", "sandbox1.c", "sandbox2.c"]
+test_files = ["sandbox3.c",]
 lib_inc = "../"
 
 #############################################################
