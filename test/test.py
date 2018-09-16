@@ -25,7 +25,7 @@ def page_reclaims(prog):
     if m:
         found = m.group(1)
         return int(found)
-    return ""
+    return 0
 
 def cmd_output(com):
     pipe = cmd.Popen(com, stdout=cmd.PIPE, stderr=cmd.PIPE)

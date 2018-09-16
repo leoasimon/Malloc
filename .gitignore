@@ -3,4 +3,4 @@ obj
 libft/*.a
 libft/*.o
 *.so
-tests/bin/*
+bin/
