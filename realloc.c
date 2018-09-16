@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   realloc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekelen <ekelen@student.42.us.org>          +#+  +:+       +#+        */
+/*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 09:43:28 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/15 15:53:47 by ekelen           ###   ########.fr       */
+/*   Updated: 2018/09/16 12:40:37 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,30 @@ void clear_allocated_mem(t_malloc	*ptr)
 	ft_bzero(ptr->ret_ptr, ptr->len);
 }
 
-// void split_mem(t_malloc	*ptr, size_t new_size)
-// {
-// 	t_malloc	*new_block;
+void	split_space(t_malloc *ptr, size_t size, size_t size_remaining)
+{
+	t_malloc	*new;
+
+	new = init_malloc(((void *)ptr->ret_ptr) + size, size_remaining);
+	new->next = ptr->next;
+	clear_allocated_mem(new);
+	ptr->next = new;
+	
+}
+
+void 	*get_split_ptr(t_malloc *found_ptr, size_t size)
+{
+	size_t		available_space;
+	
+	available_space = found_ptr->len - MALLOC_STRUCT_SIZE - size;
+	if (available_space >= 4)
+		split_space(found_ptr, size, available_space);
+	return(found_ptr);
+}
 
 void	*realloc(void	*ptr, size_t size)
 {
 	t_malloc	*found_ptr;
-	size_t		available_space;
 	t_malloc	*new_malloc;
 	
 	found_ptr = locate_ptr_in_heaps(ptr);
@@ -73,15 +89,7 @@ void	*realloc(void	*ptr, size_t size)
 	{
 		printf("found: %p, %zu\n", ptr, size);
 		if (size <= found_ptr->len) 
-		{
-			available_space = (found_ptr)->len - MALLOC_STRUCT_SIZE - size;
-			if (available_space >= 4) 
-			{
-				// TODO: split
-				return (found_ptr);
-			}
-			return (found_ptr);
-		}
+			return get_split_ptr(found_ptr, size);
 		// if (available_space > 4)
 		new_malloc = malloc(size);
 		ft_memcpy(new_malloc, found_ptr, size);
