@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lsimon <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/07 10:36:05 by lsimon            #+#    #+#              #
-#    Updated: 2016/12/22 15:39:34 by lsimon           ###   ########.fr        #
+#    Updated: 2018/09/17 10:22:00 by lsimon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,7 +80,8 @@ SRC =	ft_atoi.c\
 		ft_word_count.c\
 		ft_word_count_line.c\
 		ft_ishex.c\
-		ft_atoi_max.c
+		ft_atoi_max.c\
+		ft_print_addr.c\
 
 OBJ =	ft_bzero.o\
 		ft_isalnum.o\
@@ -150,7 +151,8 @@ OBJ =	ft_bzero.o\
 		ft_word_count.o\
 		ft_word_count_line.o\
 		ft_ishex.o\
-		ft_atoi_max.o
+		ft_atoi_max.o\
+		ft_print_addr.o		
 
 NAME = libft.a
 

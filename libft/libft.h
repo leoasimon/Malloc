@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsimon <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 14:52:24 by lsimon            #+#    #+#             */
-/*   Updated: 2016/12/22 15:39:54 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/17 10:20:36 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,6 @@ int				ft_get_next_line(const int fd, char **line);
 int				ft_word_count(const char *s, char c);
 int				ft_word_count_line(const char *s);
 int				ft_ishex(char c);
+void			ft_print_addr(void *addr);
 
 #endif

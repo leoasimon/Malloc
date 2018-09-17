@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekelen <ekelen@student.42.us.org>          +#+  +:+       +#+        */
+/*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/10 11:52:59 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/15 17:17:05 by ekelen           ###   ########.fr       */
+/*   Updated: 2018/09/17 11:27:25 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ t_stock			*init_stock(int chunk_size)
 	stock->free_bits = optimal_size - STOCK_STRUCT_SIZE; //TODO: Fix this?
 	stock->len = optimal_size;
 
-	printf("Fresh stock: start: %p, len: %zu, end: %p\n\n", stock, stock->len, (void *)stock + stock->len);
 	return (stock);
 }
 
