@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/16 12:41:20 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/17 09:31:20 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/17 09:37:50 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,7 @@ static void	*free_and_update_lg(t_malloc *curr, void *ptr)
 			munmap(curr, MALLOC_STRUCT_SIZE + curr->len);
 			return next;
 		}
-		return free_and_update_lg(curr->next, ptr);
-
+		curr->next = free_and_update_lg(curr->next, ptr);
 	}
 	return curr;
 }
