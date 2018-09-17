@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 12:31:57 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/17 09:06:46 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/17 15:07:22 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ enum {
 #define PAGE_SIZE (getpagesize())
 #define STOCK_STRUCT_SIZE (sizeof(t_stock))
 #define MALLOC_STRUCT_SIZE (sizeof(t_malloc))
-#define GET_NEXT_MALLOC_ADDR(x) ((t_malloc *)x + MALLOC_STRUCT_SIZE + x->len)
 
 void			*malloc(size_t req_size);
 void			*realloc(void *ptr, size_t req_size);

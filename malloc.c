@@ -29,7 +29,7 @@ t_malloc	*get_updated_head(t_malloc *curr, size_t req_size, void *pot_addr)
 {
 	if (!curr)
 		return (init_malloc(pot_addr, req_size));
-	curr->next = get_updated_head(curr->next, req_size, GET_NEXT_MALLOC_ADDR(curr));
+	curr->next = get_updated_head(curr->next, req_size, curr->ret_ptr + req_size);
 	return (curr);
 }
 
