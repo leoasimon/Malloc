@@ -14,22 +14,30 @@
 
 extern t_manager	*manager;
 
-static t_malloc *find_ptr_in_mallocs(void *ptr, t_malloc *curr)
+static t_malloc *find_ptr_in_mallocs(void *ptr, t_malloc *curr, int *err)
 {
 	if (!curr) return NULL;
+	
 	if (ptr == (void *)curr->ret_ptr && !curr->is_free) return curr;
-	return find_ptr_in_mallocs(ptr, curr->next);
+	else if (
+		ptr > (void *)curr->ret_ptr && 
+		ptr <= (void *)curr->ret_ptr + curr->len)
+		{
+			*err = 1;
+			return NULL;
+		}
+	return find_ptr_in_mallocs(ptr, curr->next, err);
 }
 
-static t_malloc	*locate_ptr(void *ptr)
+static t_malloc	*locate_ptr(void *ptr, int *err)
 {
 	t_malloc *found_malloc;
 
 	found_malloc = NULL;
 	if (!manager) return NULL;
-	if (manager->tiny) found_malloc = find_ptr_in_mallocs(ptr, manager->tiny->head);
-	if (manager->small && !found_malloc) found_malloc = find_ptr_in_mallocs(ptr, manager->tiny->head);
-	if (manager->large && !found_malloc) found_malloc = find_ptr_in_mallocs(ptr, manager->large);
+	if (manager->tiny) found_malloc = find_ptr_in_mallocs(ptr, manager->tiny->head, err);
+	if (manager->small && !found_malloc) found_malloc = find_ptr_in_mallocs(ptr, manager->tiny->head, err);
+	if (manager->large && !found_malloc) found_malloc = find_ptr_in_mallocs(ptr, manager->large, err);
 	return found_malloc;
 }
 
@@ -46,12 +54,14 @@ static int 	ft_min(int v1, int v2)
 
 void	*realloc(void	*ptr, size_t size)
 {
-	t_malloc	*found_malloc;
-	t_malloc	*new_malloc;
+	t_malloc		*found_malloc;
+	t_malloc		*new_malloc;
+	int			 	err;
 	
 	new_malloc = NULL;
+	err = 0;
 	
-	found_malloc = locate_ptr(ptr);
+	found_malloc = locate_ptr(ptr, &err);
 	if (found_malloc)
 	{
 		if (!size)
@@ -68,6 +78,5 @@ void	*realloc(void	*ptr, size_t size)
 		clear_allocated_mem(found_malloc);
 		return (new_malloc);
 	}
-	return malloc(size);
-	// return NULL;
+	return err ? NULL : malloc(size);
 }

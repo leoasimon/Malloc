@@ -11,12 +11,21 @@
 /* ************************************************************************** */
 
 #include "../malloc.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+#define M (1024 * 1024)
 
 int	main(void)
 {
-	char	*str;
+	char *addr1;
+   char *addr3;
 
-	str = (char *)malloc(10);
-	printf("ptr: %p\n", str);
-	return(0);
+   addr1 = (char*)malloc(16*1024);
+   strcpy(addr1, "Bonjours\n");
+   printf("addr1 :: %p", addr1);
+   addr3 = (char*)realloc(addr1, 128*M);
+   addr3[127*M] = 42;
+   printf("addr3 :: %p", addr1);
+   return (0);
 }
