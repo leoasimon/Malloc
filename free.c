@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/16 12:41:20 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/17 09:09:31 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/17 09:31:20 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void clear_allocated_mem(t_malloc	*ptr)
 	
 	p = ptr->ret_ptr;
 	ptr->is_free = 1;
-	ft_bzero(ptr->ret_ptr, ptr->len); //TODO: fix it, currently overriding next struct
+	ft_bzero(ptr->ret_ptr, ptr->len);
 }
 
 static void	*free_and_update(t_stock *curr, void *ptr)
@@ -60,10 +60,9 @@ static void	*free_and_update(t_stock *curr, void *ptr)
 			(void *)ptr < (void *)curr + curr->len
 		)
 		{
-			found_ptr = (t_malloc *)find_alloc_in_list(ptr, curr->head, NULL); //may not work with large
+			found_ptr = (t_malloc *)find_alloc_in_list(ptr, curr->head, NULL);
 			if (found_ptr == curr->head && found_ptr->next == NULL)
 			{
-				printf("Should munmap\n");
 				next = curr->next;
 				munmap(curr, curr->len);
 				return next;
@@ -76,7 +75,27 @@ static void	*free_and_update(t_stock *curr, void *ptr)
 	return curr;
 }
 
+static void	*free_and_update_lg(t_malloc *curr, void *ptr)
+{
+	t_malloc	*next;
+	
+	if (curr)
+	{
+		if (curr->ret_ptr == ptr)
+		{
+			next = curr->next;
+			munmap(curr, MALLOC_STRUCT_SIZE + curr->len);
+			return next;
+		}
+		return free_and_update_lg(curr->next, ptr);
+
+	}
+	return curr;
+}
+
 void	free(void	*ptr)
 {
+	manager->large = free_and_update_lg(manager->large, ptr);
 	manager->small = free_and_update(manager->small, ptr);
+	manager->tiny = free_and_update(manager->tiny, ptr);
 }
