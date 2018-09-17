@@ -14,6 +14,7 @@ int     main()
 	char *addr1;
 	char *addr3;
 
+	print("With stdlib: Realloc\n");
 	addr1 = (char*)malloc(16*M);
 	strcpy(addr1, "Bonjours\n");
 	print(addr1);
