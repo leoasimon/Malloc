@@ -29,16 +29,32 @@ static t_malloc *find_ptr_in_mallocs(void *ptr, t_malloc *curr, int *err)
 	return find_ptr_in_mallocs(ptr, curr->next, err);
 }
 
+static t_stock *in_list(void *ptr, t_stock *curr)
+{
+	if (!curr) return NULL;
+	if (
+		ptr > (void *)curr && 
+		ptr <= (void *)curr + curr->len &&
+		!curr->is_free)
+		{
+			return curr;
+		}
+	return in_list(ptr, curr->next);
+}
+
 static t_malloc	*locate_ptr(void *ptr, int *err)
 {
 	t_malloc *found_malloc;
+	t_stock  *list;
 
 	found_malloc = NULL;
+	list = NULL;
 	if (!manager) return NULL;
-	if (manager->tiny) found_malloc = find_ptr_in_mallocs(ptr, manager->tiny->head, err);
-	if (manager->small && !found_malloc) found_malloc = find_ptr_in_mallocs(ptr, manager->tiny->head, err);
-	if (manager->large && !found_malloc) found_malloc = find_ptr_in_mallocs(ptr, manager->large, err);
-	return found_malloc;
+	if (manager->tiny && (list = in_list(ptr, manager->tiny))) return (find_ptr_in_mallocs(ptr, list->head, err));
+	else if (manager->small && (list = in_list(ptr, manager->small))) return (find_ptr_in_mallocs(ptr, list->head, err));
+	else if (manager->large && !found_malloc) return (find_ptr_in_mallocs(ptr, manager->large, err));
+	else
+		return NULL;
 }
 
 static void clear_allocated_mem(t_malloc	*ptr)
@@ -57,11 +73,16 @@ void	*realloc(void	*ptr, size_t size)
 	t_malloc		*found_malloc;
 	t_malloc		*new_malloc;
 	int			 	err;
+	printf("---------\n");
 	
 	new_malloc = NULL;
 	err = 0;
 	
+	
 	found_malloc = locate_ptr(ptr, &err);
+	printf("found_malloc           ::   %p\n", found_malloc);
+
+	printf("ptr                    ::   %p\n", ptr);
 	if (found_malloc)
 	{
 		if (!size)
@@ -78,5 +99,5 @@ void	*realloc(void	*ptr, size_t size)
 		clear_allocated_mem(found_malloc);
 		return (new_malloc);
 	}
-	return err ? NULL : malloc(size);
+	return (err > 0 ? NULL : malloc(size));
 }
