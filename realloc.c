@@ -14,88 +14,60 @@
 
 extern t_manager	*manager;
 
-static void	*find_alloc_in_list(void *ptr, t_malloc *curr)
+static t_malloc *find_ptr_in_mallocs(void *ptr, t_malloc *curr)
 {
-    if (!curr)
-        return NULL;
-
-	printf("ptr: %p, ret: %p\n\n", ptr, curr->ret_ptr);
-    if (ptr == curr->ret_ptr)
-        return curr;
-
-    return find_alloc_in_list(ptr, curr->next);
+	if (!curr) return NULL;
+	if (ptr == (void *)curr->ret_ptr && !curr->is_free) return curr;
+	return find_ptr_in_mallocs(ptr, curr->next);
 }
 
-static void	*locate_ptr(t_stock *curr, void *ptr)
+static t_malloc	*locate_ptr(void *ptr)
 {
-	if (curr)
-	{
-		if 
-		(
-			(void *)ptr > (void *)curr && 
-			(void *)ptr < (void *)curr + curr->len
-		)
-			return find_alloc_in_list(ptr, curr->head); //may not work with large
-		return locate_ptr(curr->next, ptr);
-	}
-	return NULL;
+	t_malloc *found_malloc;
+
+	found_malloc = NULL;
+	if (!manager) return NULL;
+	if (manager->tiny) found_malloc = find_ptr_in_mallocs(ptr, manager->tiny->head);
+	if (manager->small && !found_malloc) found_malloc = find_ptr_in_mallocs(ptr, manager->tiny->head);
+	if (manager->large && !found_malloc) found_malloc = find_ptr_in_mallocs(ptr, manager->large);
+	return found_malloc;
 }
 
-static void	*locate_ptr_in_heaps(void	*ptr)
-{
-	void	*found_ptr;
-	found_ptr = locate_ptr(manager->tiny, ptr);
-	if (!found_ptr)
-		found_ptr = locate_ptr(manager->small, ptr);
-	if (!found_ptr)
-		found_ptr = locate_ptr((t_stock *)manager->large, ptr); //Ugly cast
-	return(found_ptr);
-}
-
-void clear_allocated_mem(t_malloc	*ptr)
+static void clear_allocated_mem(t_malloc	*ptr)
 {
 	ptr->is_free = 1;
-	// ft_bzero(ptr->ret_ptr, 100);
+	ft_bzero(ptr->ret_ptr, ptr->len);
 }
 
-void	split_space(t_malloc *ptr, size_t size, size_t size_remaining)
+static int 	ft_min(int v1, int v2)
 {
-	t_malloc	*new;
-
-	new = init_malloc(((void *)ptr->ret_ptr) + size, size_remaining);
-	new->next = ptr->next;
-	clear_allocated_mem(new);
-	ptr->next = new;
-	
-}
-
-void 	*get_split_ptr(t_malloc *found_ptr, size_t size)
-{
-	size_t		available_space;
-	
-	available_space = found_ptr->len - MALLOC_STRUCT_SIZE - size;
-	if (available_space >= 4)
-		split_space(found_ptr, size, available_space);
-	return(found_ptr);
+	return v1 <= v2 ? v1 : v2;
 }
 
 void	*realloc(void	*ptr, size_t size)
 {
-	t_malloc	*found_ptr;
+	t_malloc	*found_malloc;
 	t_malloc	*new_malloc;
 	
-	found_ptr = locate_ptr_in_heaps(ptr);
-	if (found_ptr)
+	new_malloc = NULL;
+	
+	found_malloc = locate_ptr(ptr);
+	if (found_malloc)
 	{
-		printf("found: %p, %zu\n", ptr, size);
-		if (size <= found_ptr->len) 
-			return get_split_ptr(found_ptr, size);
-		// if (available_space > 4)
-		new_malloc = malloc(size);
-		ft_memcpy(new_malloc, found_ptr, size);
-		clear_allocated_mem(ptr);
-		return new_malloc;
+		if (!size)
+		{
+			free(ptr);
+			return NULL;
+		}
+		if (size <= found_malloc->len) {
+			found_malloc->len = size;
+			return found_malloc->ret_ptr;
+		}
+		new_malloc = malloc(ft_min((int)size, (int)found_malloc->len));
+		ft_memcpy(new_malloc, ptr, ft_min((int)size, (int)found_malloc->len));
+		clear_allocated_mem(found_malloc);
+		return (new_malloc);
 	}
-	//if ptr not found, null, just return a new malloc
 	return malloc(size);
+	// return NULL;
 }
