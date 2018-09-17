@@ -19,7 +19,7 @@ static void	print_mallocs(t_malloc	*curr, int *total)
 	{
 		if (!curr->is_free)
 		{
-			printf("%p - %p : %zu octets\n", curr->ret_ptr, (void *)curr + curr->len, curr->len);
+			printf("%p - %p : %zu octets\n", curr->ret_ptr, curr->ret_ptr + curr->len, curr->len);
 			*total += curr->len;
 		}
 		print_mallocs(curr->next, total);
