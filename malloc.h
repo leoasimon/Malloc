@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 12:31:57 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/18 10:48:09 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/18 11:05:33 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,9 @@ void			*realloc(void *ptr, size_t req_size);
 void			free(void *ptr);
 void			show_alloc_mem(void);
 
-
 t_malloc		*init_malloc(void *addr, size_t req_size);
 t_stock			*init_stock(int chunk_size);
 t_manager		*init_manager(void);
 t_malloc		*init_large_mmap(size_t req_size);
-
 
 #endif

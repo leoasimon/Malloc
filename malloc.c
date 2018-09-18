@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 10:39:23 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/18 10:42:17 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/18 11:00:43 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ t_malloc	*get_updated_head(t_malloc *curr, size_t req_size, void *pot_addr)
 {
 	if (!curr)
 		return (init_malloc(pot_addr, req_size));
-	curr->next = get_updated_head(curr->next, req_size, curr->ret_ptr + req_size);
+	curr->next = get_updated_head(curr->next,\
+	req_size, curr->ret_ptr + req_size);
 	return (curr);
 }
 
@@ -55,7 +56,8 @@ void	*get_ret_ptr(t_malloc *curr)
 
 void	*retrieve_chunk(t_stock *stock, size_t req_size)
 {
-	stock->head = get_updated_head(stock->head, req_size, (void *)stock + STOCK_STRUCT_SIZE);
+	stock->head = get_updated_head(stock->head, req_size,\
+	(void *)stock + STOCK_STRUCT_SIZE);
 	stock->free_bits -= req_size + MALLOC_STRUCT_SIZE;
 	return (get_ret_ptr(stock->head));
 }
@@ -67,7 +69,7 @@ t_stock	*retrieve_available_mmap(t_stock *curr, size_t req_size)
 	return (retrieve_available_mmap(curr->next, req_size));
 }
 
-void	*malloc(size_t	req_size)
+void	*malloc(size_t req_size)
 {
 	static int		debug_count = 0;
 
@@ -77,12 +79,16 @@ void	*malloc(size_t	req_size)
 	if (req_size <= TINY)
 	{
 		manager->tiny = get_linked(manager->tiny, TINY);
-		return (retrieve_chunk(retrieve_available_mmap(manager->tiny, req_size), req_size));
+		return (\
+		retrieve_chunk(retrieve_available_mmap(manager->tiny, req_size),\
+		req_size));
 	}
 	if (req_size <= SMALL)
 	{
 		manager->small = get_linked(manager->small, SMALL);
-		return (retrieve_chunk(retrieve_available_mmap(manager->small, req_size), req_size));
+		return (\
+		retrieve_chunk(retrieve_available_mmap(manager->small, req_size),\
+		req_size));
 	}
 	if (req_size > SMALL)
 	{
