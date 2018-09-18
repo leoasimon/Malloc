@@ -64,26 +64,26 @@ static void clear_allocated_mem(t_malloc	*ptr)
 	ft_bzero(ptr->ret_ptr, ptr->len);
 }
 
-static int 	ft_min(int v1, int v2)
-{
-	return v1 <= v2 ? v1 : v2;
-}
+// static int 	ft_min(int v1, int v2)
+// {
+// 	return v1 <= v2 ? v1 : v2;
+// }
 
 void	*realloc(void	*ptr, size_t size)
 {
 	t_malloc		*found_malloc;
 	t_malloc		*new_malloc;
 	int			 	err;
-	printf("---------\n");
+	// printf("---------\n");
 	
 	new_malloc = NULL;
 	err = 0;
 	
 	
 	found_malloc = locate_ptr(ptr, &err);
-	printf("found_malloc           ::   %p\n", found_malloc);
+	// printf("found_malloc           ::   %p\n", found_malloc);
 
-	printf("ptr                    ::   %p\n", ptr);
+	// printf("ptr                    ::   %p\n", ptr);
 	if (found_malloc)
 	{
 		if (!size)
@@ -95,8 +95,8 @@ void	*realloc(void	*ptr, size_t size)
 			found_malloc->len = size;
 			return found_malloc->ret_ptr;
 		}
-		new_malloc = malloc(ft_min((int)size, (int)found_malloc->len));
-		ft_memcpy(new_malloc, ptr, ft_min((int)size, (int)found_malloc->len));
+		new_malloc = malloc(size);
+		ft_memcpy(new_malloc, ptr, found_malloc->len);
 		clear_allocated_mem(found_malloc);
 		return (new_malloc);
 	}

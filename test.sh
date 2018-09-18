@@ -55,7 +55,7 @@ echo "$MAGENTA \n----------ours----------\n $RESET"
 echo "\n$GREEN +++++++++  TEST4 (FREE + REALLOC) ++++++++++ $RESET"
 gcc -o test4 test4.c
 echo "$BLUE ----------stdlib---------- $RESET"
-./test3
+./test4
 
 echo "$MAGENTA \n----------ours----------\n $RESET"
 ./run.sh ./test4
