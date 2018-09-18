@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 09:43:28 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/16 14:13:03 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/18 09:42:53 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,11 @@ static t_malloc *find_ptr_in_mallocs(void *ptr, t_malloc *curr, int *err)
 static t_stock *in_list(void *ptr, t_stock *curr)
 {
 	if (!curr) return NULL;
-	if (
+	if 
+	(
 		ptr > (void *)curr && 
-		ptr <= (void *)curr + curr->len &&
-		!curr->is_free)
+		ptr <= (void *)curr + curr->len
+	)
 		{
 			return curr;
 		}
