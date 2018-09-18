@@ -6,13 +6,13 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/17 11:12:43 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/17 15:37:32 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/18 10:24:53 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-extern t_manager *manager;
+extern t_manager	*manager;
 
 static void	*get_next(t_malloc *curr)
 {
@@ -21,24 +21,24 @@ static void	*get_next(t_malloc *curr)
 	return (curr);
 }
 
-static void	*find_alloc_in_list(void *ptr, t_malloc *curr, t_malloc *start)
+static void			*find_alloc_in_list(void *ptr, t_malloc *curr, t_malloc *s)
 {
 	if (!curr)
 		return (NULL);
 	if (ptr == curr->ret_ptr)
 	{
-		start = start ? start : curr;
-		start->next = get_next(curr->next);
-		return (start);
+		s = s ? s : curr;
+		s->next = get_next(curr->next);
+		return (s);
 	}
-	if (curr->is_free && !start)
-		start = curr;
+	if (curr->is_free && !s)
+		s = curr;
 	if (!curr->is_free)
-		start = NULL;
-	return (find_alloc_in_list(ptr, curr->next, start));
+		s = NULL;
+	return (find_alloc_in_list(ptr, curr->next, s));
 }
 
-static void	clear_allocated_mem(t_malloc *ptr)
+static void			clear_allocated_mem(t_malloc *ptr)
 {
 	void	*p;
 
@@ -47,7 +47,7 @@ static void	clear_allocated_mem(t_malloc *ptr)
 	ft_bzero(ptr->ret_ptr, ptr->len);
 }
 
-static void	*free_and_update(t_stock *curr, void *ptr)
+static void			*free_and_update(t_stock *curr, void *ptr)
 {
 	t_malloc	*found_ptr;
 	t_stock		*next;
@@ -67,14 +67,14 @@ static void	*free_and_update(t_stock *curr, void *ptr)
 				}
 				clear_allocated_mem(found_ptr);
 			}
-			return curr;
+			return (curr);
 		}
 		curr->next = free_and_update(curr->next, ptr);
 	}
 	return (curr);
 }
 
-static void	*free_and_update_lg(t_malloc *curr, void *ptr)
+static void			*free_and_update_lg(t_malloc *curr, void *ptr)
 {
 	t_malloc	*next;
 
@@ -91,7 +91,7 @@ static void	*free_and_update_lg(t_malloc *curr, void *ptr)
 	return (curr);
 }
 
-void	free(void *ptr)
+void				free(void *ptr)
 {
 	manager->large = free_and_update_lg(manager->large, ptr);
 	manager->small = free_and_update(manager->small, ptr);

@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/17 11:31:30 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/17 11:33:18 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/18 10:49:47 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern t_manager	*manager;
 
-static void	print_mallocs(t_malloc	*curr, int *total)
+static void	print_mallocs(t_malloc *curr, int *total)
 {
 	if (curr)
 	{
