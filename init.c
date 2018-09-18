@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/10 11:52:59 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/18 10:23:34 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/18 10:51:45 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ t_malloc			*init_large_mmap(size_t req_size)
 {
 	t_malloc	*mem_ptr;
 
-	if (mem_ptr = (t_malloc *)\
+	if ((mem_ptr = (t_malloc *)\
 		mmap(NULL, req_size, PROT_READ | PROT_WRITE,\
-		MAP_ANON | MAP_PRIVATE, -1, 0))
+		MAP_ANON | MAP_PRIVATE, -1, 0)))
 	{
 		mem_ptr->next = NULL;
 		mem_ptr->is_free = 0;
@@ -55,9 +55,9 @@ t_stock				*init_stock(int chunk_size)
 	size_t		optimal_size;
 
 	optimal_size = get_optimal_size(chunk_size);
-	if (stock = (t_stock *)\
+	if ((stock = (t_stock *)\
 		mmap(NULL, optimal_size, PROT_READ | PROT_WRITE,\
-		MAP_ANON | MAP_PRIVATE, -1, 0))
+		MAP_ANON | MAP_PRIVATE, -1, 0)))
 	{
 		stock->head = NULL;
 		stock->next = NULL;
@@ -72,9 +72,9 @@ t_manager			*init_manager(void)
 {
 	t_manager *manager;
 
-	if (manager = (t_manager *)\
+	if ((manager = (t_manager *)\
 		mmap(NULL, sizeof(t_manager), PROT_READ | PROT_WRITE,\
-		MAP_ANON | MAP_PRIVATE, -1, 0))
+		MAP_ANON | MAP_PRIVATE, -1, 0)))
 	{
 		manager->tiny = NULL;
 		manager->small = NULL;
