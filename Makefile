@@ -61,21 +61,7 @@ all: $(NAME)
 libft:
 	@make -C libft/ all
 
-test: cleantests
-	@echo "\n${MAGENTA} SCHOOL TESTS ${RESET}"
-	@sh ./test/run.sh
-	@python ./test/test.py
-	@echo "\n${GREEN} SANDBOX ${RESET}"
-	@cp $(NAME) ./sandbox/
-	@python ./sandbox/test.py
-
-cleantests:
-	@rm -rf test/bin
-	@rm -rf sandbox/bin
-	@rm -f ./sandbox/$(NAME)
-	@rm -f ./sandbox/libft_malloc.so
-
-clean: cleantests
+clean:
 	@rm -rf $(OBJ_PATH)
 	@rm -f libft_malloc.so
 

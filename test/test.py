@@ -25,7 +25,7 @@ def page_reclaims(prog):
     if m:
         found = m.group(1)
         return int(found)
-    return 0
+    return ""
 
 def cmd_output(com):
     pipe = cmd.Popen(com, stdout=cmd.PIPE, stderr=cmd.PIPE)
@@ -93,7 +93,7 @@ elif pr2 < pr1:
     print("Free is functioning.")
 else:
     print("The free does not work.")
-print("")
+print("");
 #############################################################
 # Realloc
 print("#####Test realloc")

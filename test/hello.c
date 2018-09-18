@@ -1,24 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sandbox1.c                                         :+:      :+:    :+:   */
+/*   hello.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekelen <ekelen@student.42.us.org>          +#+  +:+       +#+        */
+/*   By: byoung-w <byoung-w@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/15 10:22:03 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/15 17:03:52 by ekelen           ###   ########.fr       */
+/*   Created: 2014/09/08 14:49:06 by byoung-w          #+#    #+#             */
+/*   Updated: 2014/09/08 14:49:10 by byoung-w         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../malloc.h"
-
-int	main(void)
+int		main(void)
 {
-	char	*str;
-	int 	i;
-
-	str = (char *)malloc(10);
-	(void) i;
-	printf("ptr: %p\n", str);
-	return(0);
+	return (0);
 }

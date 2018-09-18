@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   test5.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: byoung-w <byoung-w@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/09/08 14:49:06 by byoung-w          #+#    #+#             */
-/*   Updated: 2018/09/15 09:14:24 by lsimon           ###   ########.fr       */
+/*   Updated: 2014/09/08 14:49:10 by byoung-w         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../malloc.h"
-
-void	ft_putstr(char *str)
-{
-	while (*str)
-		write(1, str++, 1);
-}
 
 int		main(void)
 {

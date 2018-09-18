@@ -4,3 +4,4 @@ libft/*.a
 libft/*.o
 *.so
 bin/
+.DS_Store

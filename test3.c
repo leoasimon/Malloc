@@ -1,4 +1,3 @@
-#include "../malloc.h"
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -23,10 +22,10 @@ int     main()
    print(addr3);
    return (0);
 }
-//  gcc -o test3 test3.c
-//  ./run.sh ./test3
+// $&gt; gcc -o test3 test3.c
+// $&gt; ./run.sh ./test3
 // Bonjours
 // Bonjours
-
+// $&gt;
 
 // Ca fonctionne comme dans l'exemple ?
