@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 10:39:23 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/20 15:29:04 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/20 15:53:49 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ t_malloc			*get_updated_head(t_malloc *curr, size_t req_size, void *pot_addr)
 {
 	if (!curr)
 		return (init_malloc(pot_addr, req_size));
+	if (curr->is_free && curr->len >= req_size)
+		return (curr);
 	curr->next = get_updated_head(curr->next,\
 	req_size, curr->ret_ptr + req_size);
 	return (curr);
