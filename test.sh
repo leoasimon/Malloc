@@ -13,7 +13,7 @@ BOLDWHITE="\033[1m\033[37m"
  
 
 echo "\n$GREEN +++++++++  TEST0 ++++++++++ $RESET"
-gcc -o test0 test0.c
+gcc -o test0 test0.c -g
 echo "$BLUE ----------stdlib---------- $RESET"
 /usr/bin/time -l ./test0
 
@@ -21,7 +21,7 @@ echo "$MAGENTA \n----------ours----------\n $RESET"
 ./run.sh /usr/bin/time -l ./test0
 
 echo "\n$GREEN +++++++++  TEST1 ++++++++++ $RESET"
-gcc -o test1 test1.c
+gcc -o test1 test1.c -g
 echo "$BLUE ----------stdlib---------- $RESET"
 /usr/bin/time -l ./test1
 
@@ -29,7 +29,7 @@ echo "$MAGENTA \n----------ours----------\n $RESET"
 ./run.sh /usr/bin/time -l ./test1
 
 echo "\n$GREEN +++++++++  TEST2 (FREE) ++++++++++ $RESET"
-gcc -o test2 test2.c
+gcc -o test2 test2.c -g
 echo "$BLUE ----------stdlib---------- $RESET"
 /usr/bin/time -l ./test2
 
@@ -37,7 +37,7 @@ echo "$MAGENTA \n----------ours----------\n $RESET"
 ./run.sh /usr/bin/time -l ./test2
 
 echo "\n$GREEN +++++++++  TEST3 (REALLOC) ++++++++++ $RESET"
-gcc -o test3 test3.c
+gcc -o test3 test3.c -L. -lft_malloc -g
 echo "$BLUE ----------stdlib---------- $RESET"
 ./test3
 
@@ -45,7 +45,7 @@ echo "$MAGENTA \n----------ours----------\n $RESET"
 ./run.sh ./test3
 
 echo "\n$GREEN +++++++++  TEST3.5 (REALLOC) ++++++++++ $RESET"
-gcc -o test3_5 test3_5.c
+gcc -o test3_5 test3_5.c -g
 echo "$BLUE ----------stdlib---------- $RESET"
 ./test3_5
 
@@ -53,7 +53,7 @@ echo "$MAGENTA \n----------ours----------\n $RESET"
 ./run.sh ./test3_5
 
 echo "\n$GREEN +++++++++  TEST4 (FREE + REALLOC) ++++++++++ $RESET"
-gcc -o test4 test4.c
+gcc -o test4 test4.c -g
 echo "$BLUE ----------stdlib---------- $RESET"
 ./test4
 
@@ -61,7 +61,7 @@ echo "$MAGENTA \n----------ours----------\n $RESET"
 ./run.sh ./test4
 
 echo "\n$GREEN +++++++++  TEST5 (FREE + REALLOC) ++++++++++ $RESET"
-gcc -o test5 test5.c -L. -lft_malloc
+gcc -o test5 test5.c -L. -lft_malloc -g
 echo "$BLUE ----------stdlib---------- $RESET"
 echo "(NOT APPLICABLE)\n"
 

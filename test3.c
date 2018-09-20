@@ -18,8 +18,11 @@ int     main()
    strcpy(addr1, "Bonjours\n");
    print(addr1);
    addr3 = (char*)realloc(addr1, 128*M);
+    // addr3 = (char*)malloc(128 * M);
    addr3[127*M] = 42;
    print(addr3);
+   free(addr3);
+   free(addr1);
    return (0);
 }
 // $&gt; gcc -o test3 test3.c
