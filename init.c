@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/10 11:52:59 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/20 13:32:21 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/20 14:18:52 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static size_t		get_optimal_size(size_t chunk_size)
 
 	initial = chunk_size * NB_CHUNKS;
 	initial += MALLOC_STRUCT_SIZE * NB_CHUNKS + STOCK_STRUCT_SIZE;
-	return (initial + initial % PAGE_SIZE);
+	return ((int)(initial / PAGE_SIZE) + 1) * PAGE_SIZE;
 }
 
 t_malloc			*init_malloc(void *addr, size_t req_size)
