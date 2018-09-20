@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   realloc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ekelen <ekelen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 09:43:28 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/20 11:45:46 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/20 14:19:05 by ekelen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
-
-t_manager g_manager;
 
 static t_malloc *find_ptr_in_mallocs(void *ptr, t_malloc *curr, int *err)
 {
@@ -63,29 +61,20 @@ static t_malloc	*locate_ptr(void *ptr, int *err)
 static void clear_allocated_mem(t_malloc	*ptr)
 {
 	ptr->is_free = 1;
-	ft_bzero(ptr->ret_ptr, ptr->len);
+	// ft_bzero(ptr->ret_ptr, ptr->len); // ??
 }
-
-// static int 	ft_min(int v1, int v2)
-// {
-// 	return v1 <= v2 ? v1 : v2;
-// }
 
 void	*realloc(void	*ptr, size_t size)
 {
 	t_malloc		*found_malloc;
 	t_malloc		*new_malloc;
 	int			 	err;
-	// printf("---------\n");
 	
 	new_malloc = NULL;
 	err = 0;
 	
 	
 	found_malloc = locate_ptr(ptr, &err);
-	// printf("found_malloc           ::   %p\n", found_malloc);
-
-	// printf("ptr                    ::   %p\n", ptr);
 	if (found_malloc)
 	{
 		if (!size)
@@ -97,7 +86,8 @@ void	*realloc(void	*ptr, size_t size)
 			found_malloc->len = size;
 			return found_malloc->ret_ptr;
 		}
-		new_malloc = malloc(size);
+		if (!(new_malloc = malloc(size)))
+            return NULL;
 		ft_memcpy(new_malloc, ptr, found_malloc->len);
 		clear_allocated_mem(found_malloc);
 		return (new_malloc);
