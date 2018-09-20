@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 12:31:57 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/20 11:46:01 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/20 15:26:34 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ typedef struct	s_manager
 
 enum {
 	TINY = 128,
-	SMALL = 1200,
+	SMALL = 1204,
 } e_chunk_size;
 
 extern t_manager	g_manager;
 
 # define TINY 128
-# define SMALL 1200
+# define SMALL 1204
 # define NB_CHUNKS 100
 # define PAGE_SIZE (getpagesize())
 # define STOCK_STRUCT_SIZE (sizeof(t_stock))

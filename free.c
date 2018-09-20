@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/17 11:12:43 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/20 13:33:50 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/20 15:10:42 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void			clear_allocated_mem(t_malloc *ptr)
 static void			*free_and_update(t_stock *curr, void *ptr)
 {
 	t_malloc	*found_ptr;
-	t_stock		*next;
+	// t_stock		*next;
 
 	if (curr)
 	{
@@ -59,12 +59,12 @@ static void			*free_and_update(t_stock *curr, void *ptr)
 			found_ptr = (t_malloc *)find_alloc_in_list(ptr, curr->head, NULL);
 			if (found_ptr)
 			{
-				if (found_ptr == curr->head && found_ptr->next == NULL)
-				{
-					next = curr->next;
-					munmap(curr, curr->len + MALLOC_STRUCT_SIZE);
-					return (next);
-				}
+				// if (found_ptr == curr->head && found_ptr->next == NULL)
+				// {
+				// 	next = curr->next;
+				// 	munmap(curr, curr->len + MALLOC_STRUCT_SIZE);
+				// 	return (next);
+				// }
 				clear_allocated_mem(found_ptr);
 			}
 			return (curr);
