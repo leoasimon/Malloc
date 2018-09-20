@@ -6,13 +6,13 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/17 11:12:43 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/18 10:24:53 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/20 11:45:05 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-extern t_manager	*manager;
+t_manager	manager;
 
 static void	*get_next(t_malloc *curr)
 {
@@ -93,7 +93,7 @@ static void			*free_and_update_lg(t_malloc *curr, void *ptr)
 
 void				free(void *ptr)
 {
-	manager->large = free_and_update_lg(manager->large, ptr);
-	manager->small = free_and_update(manager->small, ptr);
-	manager->tiny = free_and_update(manager->tiny, ptr);
+	g_manager.large = free_and_update_lg(g_manager.large, ptr);
+	g_manager.small = free_and_update(g_manager.small, ptr);
+	g_manager.tiny = free_and_update(g_manager.tiny, ptr);
 }

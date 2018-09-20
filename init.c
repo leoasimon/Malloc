@@ -6,11 +6,13 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/10 11:52:59 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/18 11:04:22 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/20 11:45:54 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
+
+extern t_manager	g_manager;
 
 static size_t		get_optimal_size(size_t chunk_size)
 {
@@ -66,18 +68,4 @@ t_stock				*init_stock(int chunk_size)
 	}
 
 	return (stock);
-}
-
-t_manager			*init_manager(void)
-{
-	t_manager *manager;
-
-	if ((manager = (t_manager *)\
-		mmap(NULL, sizeof(t_manager), PROT_READ | PROT_WRITE,\
-		MAP_ANON | MAP_PRIVATE, -1, 0)))
-	{
-		manager->tiny = NULL;
-		manager->small = NULL;
-	}
-	return (manager);
 }

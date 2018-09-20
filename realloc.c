@@ -6,13 +6,13 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 09:43:28 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/18 09:42:53 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/20 11:45:46 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-extern t_manager	*manager;
+t_manager g_manager;
 
 static t_malloc *find_ptr_in_mallocs(void *ptr, t_malloc *curr, int *err)
 {
@@ -50,10 +50,12 @@ static t_malloc	*locate_ptr(void *ptr, int *err)
 
 	found_malloc = NULL;
 	list = NULL;
-	if (!manager) return NULL;
-	if (manager->tiny && (list = in_list(ptr, manager->tiny))) return (find_ptr_in_mallocs(ptr, list->head, err));
-	else if (manager->small && (list = in_list(ptr, manager->small))) return (find_ptr_in_mallocs(ptr, list->head, err));
-	else if (manager->large && !found_malloc) return (find_ptr_in_mallocs(ptr, manager->large, err));
+	if (g_manager.tiny && (list = in_list(ptr, g_manager.tiny))) 
+		return (find_ptr_in_mallocs(ptr, list->head, err));
+	else if (g_manager.small && (list = in_list(ptr, g_manager.small))) 
+		return (find_ptr_in_mallocs(ptr, list->head, err));
+	else if (g_manager.large && !found_malloc) 
+		return (find_ptr_in_mallocs(ptr, g_manager.large, err));
 	else
 		return NULL;
 }

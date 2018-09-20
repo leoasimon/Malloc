@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 12:31:57 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/18 11:05:33 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/20 11:46:01 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ enum {
 	SMALL = 1200,
 } e_chunk_size;
 
+extern t_manager	g_manager;
+
 # define TINY 128
 # define SMALL 1200
 # define NB_CHUNKS 100
@@ -60,7 +62,6 @@ void			show_alloc_mem(void);
 
 t_malloc		*init_malloc(void *addr, size_t req_size);
 t_stock			*init_stock(int chunk_size);
-t_manager		*init_manager(void);
 t_malloc		*init_large_mmap(size_t req_size);
 
 #endif

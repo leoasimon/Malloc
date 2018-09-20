@@ -6,13 +6,13 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/17 11:31:30 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/18 10:49:47 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/20 11:54:33 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-extern t_manager	*manager;
+t_manager	g_manager;
 
 static void	print_mallocs(t_malloc *curr, int *total)
 {
@@ -68,13 +68,10 @@ void		show_alloc_mem(void)
 	int	total;
 
 	total = 0;
-	if (manager)
-	{
-		print_heap(manager->tiny, "TINY", &total);
-		print_heap(manager->small, "SMALL", &total);
-		print_large_heap(manager->large, &total);
-		ft_putstr("TOTAL: ");
-		ft_putnbr(total);
-		ft_putstr(" octets\n");
-	}
+	print_heap(g_manager.tiny, "TINY", &total);
+	print_heap(g_manager.small, "SMALL", &total);
+	print_large_heap(g_manager.large, &total);
+	ft_putstr("TOTAL: ");
+	ft_putnbr(total);
+	ft_putstr(" octets\n");
 }
