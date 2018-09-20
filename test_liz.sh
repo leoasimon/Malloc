@@ -13,9 +13,9 @@ BOLDWHITE="\033[1m\033[37m"
  
 
 echo "\n$GREEN +++++++++  TEST0 ++++++++++ $RESET"
-gcc -g -o test_liz test_liz.c -L. -lft_malloc -g
+gcc -g -o test_liz.out test_liz.c -L. -lft_malloc -g
 echo "$BLUE ----------stdlib---------- $RESET"
-./test_liz
+./test_liz.out
 
 echo "$MAGENTA \n----------ours----------\n $RESET"
-# ./run.sh ./test_liz
+./run.sh ./test_liz.out

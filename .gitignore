@@ -5,3 +5,5 @@ libft/*.o
 *.so
 bin/
 .DS_Store
+*.dSYM/
+*.out
