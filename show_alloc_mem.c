@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   show_alloc_mem.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ekelen <ekelen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/17 11:31:30 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/20 11:54:33 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/22 11:11:49 by ekelen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,52 +14,36 @@
 
 t_manager	g_manager;
 
-static void	print_mallocs(t_malloc *curr, int *total)
+static void print_heap_header(t_malloc *heap, e_sizetype sizetype)
+{
+	if (sizetype == TINY)
+		ft_putstr("TINY : ");
+	else if (sizetype == SMALL)
+		ft_putstr("SMALL : ");
+	else
+		ft_putstr("LARGE : ");
+	ft_print_addr(heap);
+	ft_putchar('\n');
+}
+
+static void	print_mallocs(t_malloc *curr, e_sizetype sizetype, int *total, int start)
 {
 	if (curr)
 	{
 		if (!curr->is_free)
 		{
+			if (start)
+				print_heap_header(curr, sizetype);
 			ft_print_addr(curr->ret_ptr);
 			ft_putstr(" - ");
 			ft_print_addr(curr->ret_ptr + curr->len);
 			ft_putstr(" : ");
-			ft_putnbr(curr->len);
+			ft_print_unsigned_long(curr->len);
 			ft_putstr(" octets\n");
 			*total += curr->len;
+			start = 0;
 		}
-		print_mallocs(curr->next, total);
-	}
-}
-
-static void	print_heap(t_stock *heap, char *title, int *total)
-{
-	if (heap)
-	{
-		ft_putstr(title);
-		ft_putstr(" : ");
-		ft_print_addr(heap);
-		ft_putchar('\n');
-		print_mallocs(heap->head, total);
-		print_heap(heap->next, title, total);
-	}
-}
-
-static void	print_large_heap(t_malloc *heap, int *total)
-{
-	if (heap)
-	{
-		ft_putstr("LARGE : ");
-		ft_print_addr(heap);
-		ft_putchar('\n');
-		ft_print_addr(heap->ret_ptr);
-		ft_putstr(" - ");
-		ft_print_addr(heap->ret_ptr + heap->len);
-		ft_putstr(" : ");
-		ft_putnbr(heap->len);
-		ft_putstr(" octets\n");
-		*total += heap->len;
-		print_large_heap(heap->next, total);
+		print_mallocs(curr->next, sizetype, total, start);
 	}
 }
 
@@ -68,10 +52,13 @@ void		show_alloc_mem(void)
 	int	total;
 
 	total = 0;
-	print_heap(g_manager.tiny, "TINY", &total);
-	print_heap(g_manager.small, "SMALL", &total);
-	print_large_heap(g_manager.large, &total);
+	if (g_manager.tiny)
+		print_mallocs(g_manager.tiny->head, TINY, &total, 1);
+	if (g_manager.small)
+		print_mallocs(g_manager.small->head, SMALL, &total, 1);
+	if (g_manager.large)
+		print_mallocs(g_manager.large, (e_sizetype)NULL, &total, 1);
 	ft_putstr("TOTAL: ");
-	ft_putnbr(total);
+	ft_print_unsigned_long(total);
 	ft_putstr(" octets\n");
 }

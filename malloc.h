@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   malloc.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ekelen <ekelen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 15:37:55 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/22 09:26:04 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/22 10:48:05 by ekelen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ typedef struct	s_manager
 	t_malloc	*large;
 }				t_manager;
 
-enum {
+typedef enum {
 	TINY = 128,
 	SMALL = 1204,
-} e_chunk_size;
+} e_sizetype;
 
 extern t_manager	g_manager;
 
