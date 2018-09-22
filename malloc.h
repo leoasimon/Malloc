@@ -6,7 +6,7 @@
 /*   By: ekelen <ekelen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 15:37:55 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/22 10:48:05 by ekelen           ###   ########.fr       */
+/*   Updated: 2018/09/22 12:42:01 by ekelen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,11 @@ extern t_manager	g_manager;
 # define TINY 128
 # define SMALL 1204
 # define NB_CHUNKS 100
+
+void			ft_putchar(char c);
+void			ft_print_addr(void *addr);
+void			ft_print_unsigned_long(size_t n);
+void			ft_putstr(char *str);
 
 void			*malloc(size_t req_size);
 void			*realloc(void *ptr, size_t req_size);

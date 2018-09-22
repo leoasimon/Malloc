@@ -33,7 +33,6 @@ static void			clear_allocated_mem(t_malloc *ptr)
 
 	p = ptr->ret_ptr;
 	ptr->is_free = 1;
-	ft_bzero(ptr->ret_ptr, ptr->len);
 }
 
 static void			*free_and_update(t_stock *curr, void *ptr)
