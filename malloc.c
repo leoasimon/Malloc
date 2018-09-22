@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 10:39:23 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/20 15:53:49 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/22 09:25:57 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_stock				*get_linked(t_stock *curr, size_t chunk_size)
 {
 	if (!curr)
 		return (init_stock(chunk_size));
-	if (curr->free_bits < chunk_size + MALLOC_STRUCT_SIZE)
+	if (curr->free_bits < chunk_size + sizeof(t_malloc))
 		curr->next = get_linked(curr->next, chunk_size);
 	return (curr);
 }
@@ -58,23 +58,20 @@ void				*get_ret_ptr(t_malloc *curr, size_t s, size_t *free_bits)
 	}
 	if (curr->next)
 		return (get_ret_ptr(curr->next, s, free_bits));
-	*free_bits -= curr->len + MALLOC_STRUCT_SIZE;
+	*free_bits -= curr->len + sizeof(t_malloc);
 	return (curr->ret_ptr);
 }
 
 void	*retrieve_chunk(t_stock *stock, size_t req_size)
 {
 	stock->head = get_updated_head(stock->head, req_size,\
-	(void *)stock + STOCK_STRUCT_SIZE);
-	// ft_putstr("AVAILABLE CHUNKS: ");
-	// ft_putnbr(stock->free_bits);
-	// ft_putchar('\n');
+	(void *)stock + (sizeof(t_stock)));
 	return (get_ret_ptr(stock->head, req_size, &(stock->free_bits)));
 }
 
 t_stock	*retrieve_available_mmap(t_stock *curr, size_t req_size)
 {
-	if (curr->free_bits >= req_size + MALLOC_STRUCT_SIZE)
+	if (curr->free_bits >= req_size + sizeof(t_malloc))
 		return (curr);
 	return (retrieve_available_mmap(curr->next, req_size));
 }

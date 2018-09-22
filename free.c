@@ -39,7 +39,7 @@ static void			clear_allocated_mem(t_malloc *ptr)
 static void			*free_and_update(t_stock *curr, void *ptr)
 {
 	t_malloc	*found_ptr;
-	// t_stock		*next;
+	t_stock		*next;
 
 	if (curr)
 	{
@@ -48,12 +48,12 @@ static void			*free_and_update(t_stock *curr, void *ptr)
 			found_ptr = (t_malloc *)find_alloc_in_list(ptr, curr->head, NULL);
 			if (found_ptr)
 			{
-				// if (found_ptr == curr->head && found_ptr->next == NULL)
-				// {
-				// 	next = curr->next;
-				// 	munmap(curr, curr->len + MALLOC_STRUCT_SIZE);
-				// 	return (next);
-				// }
+				if (found_ptr == curr->head && found_ptr->next == NULL && curr->free_bits < SMALL)
+				{
+					next = curr->next;
+					munmap(curr, curr->len + sizeof(t_malloc));
+					return (next);
+				}
 				clear_allocated_mem(found_ptr);
 			}
 			return (curr);
@@ -72,7 +72,7 @@ static void			*free_and_update_lg(t_malloc *curr, void *ptr)
 		if (curr->ret_ptr == ptr)
 		{
 			next = curr->next;
-			munmap(curr, MALLOC_STRUCT_SIZE + curr->len);
+			munmap(curr, sizeof(t_malloc) + curr->len);
 			return (next);
 		}
 		curr->next = free_and_update_lg(curr->next, ptr);

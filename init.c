@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/10 11:52:59 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/20 14:18:52 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/22 09:25:58 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static size_t		get_optimal_size(size_t chunk_size)
 	int initial;
 
 	initial = chunk_size * NB_CHUNKS;
-	initial += MALLOC_STRUCT_SIZE * NB_CHUNKS + STOCK_STRUCT_SIZE;
-	return ((int)(initial / PAGE_SIZE) + 1) * PAGE_SIZE;
+	initial += sizeof(t_malloc) * NB_CHUNKS + (sizeof(t_stock));
+	return ((int)(initial / getpagesize()) + 1) * getpagesize();
 }
 
 t_malloc			*init_malloc(void *addr, size_t req_size)
@@ -40,7 +40,7 @@ t_malloc			*init_large_mmap(size_t req_size)
 	t_malloc	*mem_ptr;
 
 	if ((mem_ptr = (t_malloc *)\
-		mmap(NULL, req_size + MALLOC_STRUCT_SIZE, PROT_READ | PROT_WRITE,\
+		mmap(NULL, req_size + sizeof(t_malloc), PROT_READ | PROT_WRITE,\
 		MAP_ANON | MAP_PRIVATE, -1, 0)))
 	{
 		mem_ptr->next = NULL;
@@ -63,7 +63,7 @@ t_stock				*init_stock(int chunk_size)
 	{
 		stock->head = NULL;
 		stock->next = NULL;
-		stock->free_bits = optimal_size - STOCK_STRUCT_SIZE;
+		stock->free_bits = optimal_size - (sizeof(t_stock));
 		stock->len = optimal_size;
 	}
 

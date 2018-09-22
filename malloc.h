@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 15:37:55 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/20 15:37:57 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/22 09:26:04 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,6 @@ extern t_manager	g_manager;
 # define TINY 128
 # define SMALL 1204
 # define NB_CHUNKS 100
-# define PAGE_SIZE (getpagesize())
-# define STOCK_STRUCT_SIZE (sizeof(t_stock))
-# define MALLOC_STRUCT_SIZE (sizeof(t_malloc))
 
 void			*malloc(size_t req_size);
 void			*realloc(void *ptr, size_t req_size);
