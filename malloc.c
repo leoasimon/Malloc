@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 10:39:23 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/22 09:25:57 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/22 09:29:23 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void				*get_ret_ptr(t_malloc *curr, size_t s, size_t *free_bits)
 void	*retrieve_chunk(t_stock *stock, size_t req_size)
 {
 	stock->head = get_updated_head(stock->head, req_size,\
-	(void *)stock + (sizeof(t_stock)));
+	(void *)stock + sizeof(t_stock));
 	return (get_ret_ptr(stock->head, req_size, &(stock->free_bits)));
 }
 
