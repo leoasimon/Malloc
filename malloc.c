@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 10:39:23 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/22 09:29:23 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/22 10:34:56 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,32 @@
 
 t_manager	g_manager;
 
-t_stock				*get_linked(t_stock *curr, size_t chunk_size)
+t_stock				*get_linked(t_stock *curr, size_t chunk_size, unsigned char *err)
 {
+	t_stock	*new;
+
 	if (!curr)
+	{
+		new = init_stock(chunk_size);
+		*err = new ? *err : *err + 1;
 		return (init_stock(chunk_size));
+	}
 	if (curr->free_bits < chunk_size + sizeof(t_malloc))
-		curr->next = get_linked(curr->next, chunk_size);
+		curr->next = get_linked(curr->next, chunk_size, err);
 	return (curr);
 }
 
-t_malloc			*add_large_node(t_malloc *curr, size_t req_size)
+t_malloc			*add_large_node(t_malloc *curr, size_t req_size, unsigned char *err)
 {
+	t_malloc	*new;
+	
 	if (!curr)
+	{
+		new = init_large_mmap(req_size);
+		*err = new ? *err : *err + 1;
 		return (init_large_mmap(req_size));
-	curr->next = add_large_node(curr->next, req_size);
+	}
+	curr->next = add_large_node(curr->next, req_size, err);
 	return (curr);
 }
 
@@ -78,26 +90,32 @@ t_stock	*retrieve_available_mmap(t_stock *curr, size_t req_size)
 
 void	*malloc(size_t req_size)
 {
-	static int		debug_count = 0;
+	unsigned char	err;
 
-	debug_count++;
+	err = 0;
 	if (req_size <= TINY)
 	{
-		g_manager.tiny = get_linked(g_manager.tiny, TINY);
+		g_manager.tiny = get_linked(g_manager.tiny, TINY, &err);
+		if (err)
+			return (NULL);
 		return (\
 		retrieve_chunk(retrieve_available_mmap(g_manager.tiny, req_size),\
 		req_size));
 	}
 	if (req_size <= SMALL)
 	{
-		g_manager.small = get_linked(g_manager.small, SMALL);
+		g_manager.small = get_linked(g_manager.small, SMALL, &err);
+		if (err)
+			return (NULL);
 		return (\
 		retrieve_chunk(retrieve_available_mmap(g_manager.small, req_size),\
 		req_size));
 	}
 	if (req_size > SMALL)
 	{
-		g_manager.large = add_large_node(g_manager.large, req_size);
+		g_manager.large = add_large_node(g_manager.large, req_size, &err);
+		if (err)
+			return (NULL);
 		return (retrieve_large_tail(g_manager.large));
 	}
 	return (NULL);

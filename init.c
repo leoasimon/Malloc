@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/10 11:52:59 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/22 09:29:10 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/22 10:15:43 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,14 @@ t_malloc			*init_malloc(void *addr, size_t req_size)
 t_malloc			*init_large_mmap(size_t req_size)
 {
 	t_malloc	*mem_ptr;
-
 	if ((mem_ptr = (t_malloc *)\
 		mmap(NULL, req_size + sizeof(t_malloc), PROT_READ | PROT_WRITE,\
-		MAP_ANON | MAP_PRIVATE, -1, 0)))
-	{
-		mem_ptr->next = NULL;
-		mem_ptr->is_free = 0;
-		mem_ptr->ret_ptr = mem_ptr + 1;
-		mem_ptr->len = req_size;
-	}
+		MAP_ANON | MAP_PRIVATE, -1, 0)) == MAP_FAILED)
+		return (NULL);
+	mem_ptr->next = NULL;
+	mem_ptr->is_free = 0;
+	mem_ptr->ret_ptr = mem_ptr + 1;
+	mem_ptr->len = req_size;
 	return (mem_ptr);
 }
 
