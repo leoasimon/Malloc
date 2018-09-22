@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   util_str.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ekelen <ekelen@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/09/22 14:26:48 by ekelen            #+#    #+#             */
+/*   Updated: 2018/09/22 14:31:33 by ekelen           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "malloc.h"
 #include <unistd.h>
 
-void	ft_putchar(char c)
+void		ft_putchar(char c)
 {
 	write(1, &c, 1);
 }
@@ -15,7 +27,7 @@ static void	print_hex(int value)
 	write(1, base + value % 16, 1);
 }
 
-void	ft_print_addr(void *addr)
+void		ft_print_addr(void *addr)
 {
 	if (addr)
 	{
@@ -24,7 +36,7 @@ void	ft_print_addr(void *addr)
 	}
 }
 
-void	ft_print_unsigned_long(size_t n)
+void		ft_print_unsigned_long(size_t n)
 {
 	const unsigned char rem = n % 10;
 
@@ -33,7 +45,7 @@ void	ft_print_unsigned_long(size_t n)
 	ft_putchar(rem + 48);
 }
 
-void	ft_putstr(char *str)
+void		ft_putstr(char *str)
 {
 	int i;
 

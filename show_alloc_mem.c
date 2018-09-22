@@ -6,7 +6,7 @@
 /*   By: ekelen <ekelen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/17 11:31:30 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/22 12:39:18 by ekelen           ###   ########.fr       */
+/*   Updated: 2018/09/22 14:26:09 by ekelen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_manager	g_manager;
 
-static void print_heap_header(t_malloc *heap, e_sizetype sizetype)
+static void	print_heap_header(t_malloc *heap, t_stype sizetype)
 {
 	if (sizetype == TINY)
 		ft_putstr("TINY : ");
@@ -26,14 +26,14 @@ static void print_heap_header(t_malloc *heap, e_sizetype sizetype)
 	ft_putchar('\n');
 }
 
-static void	print_mallocs(t_malloc *curr, e_sizetype sizetype, int *total, int start)
+static void	print_mallocs(t_malloc *curr, t_stype sz, int *total, int start)
 {
 	if (curr)
 	{
 		if (!curr->is_free)
 		{
 			if (start)
-				print_heap_header(curr, sizetype);
+				print_heap_header(curr, sz);
 			ft_print_addr(curr->ret_ptr);
 			ft_putstr(" - ");
 			ft_print_addr(curr->ret_ptr + curr->len);
@@ -43,7 +43,7 @@ static void	print_mallocs(t_malloc *curr, e_sizetype sizetype, int *total, int s
 			*total += curr->len;
 			start = 0;
 		}
-		print_mallocs(curr->next, sizetype, total, start);
+		print_mallocs(curr->next, sz, total, start);
 	}
 }
 
@@ -57,7 +57,7 @@ void		show_alloc_mem(void)
 	if (g_manager.small)
 		print_mallocs(g_manager.small->head, SMALL, &total, 1);
 	if (g_manager.large)
-		print_mallocs(g_manager.large, (e_sizetype)NULL, &total, 1);
+		print_mallocs(g_manager.large, (t_stype)NULL, &total, 1);
 	ft_putstr("TOTAL: ");
 	ft_print_unsigned_long(total);
 	ft_putstr(" octets\n");

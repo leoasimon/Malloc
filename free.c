@@ -1,9 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ekelen <ekelen@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/09/22 14:04:12 by ekelen            #+#    #+#             */
+/*   Updated: 2018/09/22 14:05:09 by ekelen           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "malloc.h"
 
-t_manager	manager;
-
-static void	*get_next(t_malloc *curr)
+static void			*get_next(t_malloc *curr)
 {
 	if (curr && curr->is_free)
 		return (get_next(curr->next));
@@ -27,14 +36,6 @@ static void			*find_alloc_in_list(void *ptr, t_malloc *curr, t_malloc *s)
 	return (find_alloc_in_list(ptr, curr->next, s));
 }
 
-static void			clear_allocated_mem(t_malloc *ptr)
-{
-	void	*p;
-
-	p = ptr->ret_ptr;
-	ptr->is_free = 1;
-}
-
 static void			*free_and_update(t_stock *curr, void *ptr)
 {
 	t_malloc	*found_ptr;
@@ -47,13 +48,14 @@ static void			*free_and_update(t_stock *curr, void *ptr)
 			found_ptr = (t_malloc *)find_alloc_in_list(ptr, curr->head, NULL);
 			if (found_ptr)
 			{
-				if (found_ptr == curr->head && found_ptr->next == NULL && curr->free_bits < SMALL)
+				if (found_ptr == curr->head && found_ptr->next == NULL && \
+				curr->free_bits < SMALL)
 				{
 					next = curr->next;
 					munmap(curr, curr->len + sizeof(t_malloc));
 					return (next);
 				}
-				clear_allocated_mem(found_ptr);
+				found_ptr->is_free = 1;
 			}
 			return (curr);
 		}

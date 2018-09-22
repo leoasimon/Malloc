@@ -1,23 +1,4 @@
-# ----------------------------------------------------------------------------
-# COLORES |
-# ----------------------------------------------------------------------------
- RESET=\033[0m
- DARK=\033[132m
- RED=\033[31m
- GREEN=\033[32m
- YELLOW=\033[33m
- BLUE=\033[34m
- MAGENTA=\033[35m
- CYAN=\033[36m
- WHITE=\033[37m
- BOLDBLACK=\033[1m\033[30m
- BOLDRED=\033[1m\033[31m
- BOLDWHITE=\033[1m\033[37m
-
-# ----------------------------------------------------------------------------
-# VARIABLES |
-# ----------------------------------------------------------------------------
-
+# ================ MAKEFILE: libft_malloc
 
 ifeq ($(HOSTTYPE),)
 	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
@@ -30,9 +11,13 @@ NAME		= libft_malloc_$(HOSTTYPE).so
 CC 			:= gcc
 
 SRC			+= malloc.c
-SRC			+= init.c
-SRC			+= show_alloc_mem.c
+SRC			+= realloc.c
 SRC			+= free.c
+SRC			+= show_alloc_mem.c
+
+SRC			+= allocate.c
+SRC			+= handle_large.c
+SRC			+= init.c
 
 SRC			+= util_mem.c
 SRC			+= util_str.c
@@ -69,5 +54,3 @@ fclean: clean
 	@rm -rf $(NAME)
 
 re: fclean $(NAME)
-
-.PHONY: test
