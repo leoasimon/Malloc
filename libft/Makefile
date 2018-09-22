@@ -6,7 +6,7 @@
 #    By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/07 10:36:05 by lsimon            #+#    #+#              #
-#    Updated: 2018/09/17 10:22:00 by lsimon           ###   ########.fr        #
+#    Updated: 2018/09/22 10:57:52 by lsimon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,6 +82,7 @@ SRC =	ft_atoi.c\
 		ft_ishex.c\
 		ft_atoi_max.c\
 		ft_print_addr.c\
+		ft_print_unsigned_long.c\
 
 OBJ =	ft_bzero.o\
 		ft_isalnum.o\
@@ -152,7 +153,9 @@ OBJ =	ft_bzero.o\
 		ft_word_count_line.o\
 		ft_ishex.o\
 		ft_atoi_max.o\
-		ft_print_addr.o		
+		ft_print_addr.o\
+		ft_print_unsigned_long.o
+			
 
 NAME = libft.a
 

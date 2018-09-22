@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 14:52:24 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/17 10:20:36 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/22 10:57:06 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,6 @@ int				ft_word_count(const char *s, char c);
 int				ft_word_count_line(const char *s);
 int				ft_ishex(char c);
 void			ft_print_addr(void *addr);
+void			ft_print_unsigned_long(size_t n);
 
 #endif
