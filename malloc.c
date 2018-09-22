@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 10:39:23 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/22 10:34:56 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/22 11:22:34 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_stock				*get_linked(t_stock *curr, size_t chunk_size, unsigned char *err)
 	{
 		new = init_stock(chunk_size);
 		*err = new ? *err : *err + 1;
-		return (init_stock(chunk_size));
+		return (new);
 	}
 	if (curr->free_bits < chunk_size + sizeof(t_malloc))
 		curr->next = get_linked(curr->next, chunk_size, err);
@@ -37,7 +37,7 @@ t_malloc			*add_large_node(t_malloc *curr, size_t req_size, unsigned char *err)
 	{
 		new = init_large_mmap(req_size);
 		*err = new ? *err : *err + 1;
-		return (init_large_mmap(req_size));
+		return (new);
 	}
 	curr->next = add_large_node(curr->next, req_size, err);
 	return (curr);
