@@ -29,11 +29,7 @@ static void			*find_alloc_in_list(void *ptr, t_malloc *curr, t_malloc *s)
 
 static void			clear_allocated_mem(t_malloc *ptr)
 {
-	void	*p;
-
-	p = ptr->ret_ptr;
 	ptr->is_free = 1;
-	ft_bzero(ptr->ret_ptr, ptr->len);
 }
 
 static void			*free_and_update(t_stock *curr, void *ptr)

@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsimon <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/05 11:03:58 by lsimon            #+#    #+#             */
-/*   Updated: 2016/11/05 11:10:12 by lsimon           ###   ########.fr       */
+/*   Created: 2016/11/02 15:51:10 by lsimon            #+#    #+#             */
+/*   Updated: 2018/09/22 12:30:19 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include "libft.h"
+#include "malloc.h"
 
-void	ft_putstr_fd(char const *s, int fd)
+void	ft_putstr(char *str)
 {
 	int i;
 
 	i = 0;
-	while (s[i])
+	while (str[i])
 	{
-		ft_putchar_fd(s[i], fd);
+		ft_putchar(str[i]);
 		i++;
 	}
 }

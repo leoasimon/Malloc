@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_recursive_factorial.c                           :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsimon <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/02 15:14:04 by lsimon            #+#    #+#             */
-/*   Updated: 2016/11/09 15:22:59 by lsimon           ###   ########.fr       */
+/*   Created: 2016/11/03 14:45:00 by lsimon            #+#    #+#             */
+/*   Updated: 2018/09/22 12:31:02 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_recursive_factorial(int nb)
+#include "malloc.h"
+
+void	ft_putchar(char c)
 {
-	if (nb == 0)
-		return (1);
-	if (nb > 0)
-		return (nb * ft_recursive_factorial(nb - 1));
-	return (0);
+	write(1, &c, 1);
 }

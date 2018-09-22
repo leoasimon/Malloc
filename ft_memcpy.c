@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr.c                                        :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsimon <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/04 09:18:27 by lsimon            #+#    #+#             */
-/*   Updated: 2016/11/04 10:11:28 by lsimon           ###   ########.fr       */
+/*   Created: 2016/11/04 13:05:02 by lsimon            #+#    #+#             */
+/*   Updated: 2018/09/22 12:31:34 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "malloc.h"
 
-void	ft_putnbr(int n)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	if (n == -2147483648)
+	unsigned int	i;
+	char			*dst_c;
+	const char		*src_c;
+
+	dst_c = dst;
+	src_c = src;
+	i = 0;
+	while (i < n)
 	{
-		ft_putnbr(-214748364);
-		n = 8;
+		dst_c[i] = src_c[i];
+		i++;
 	}
-	else if (n < 0)
-	{
-		ft_putchar('-');
-		n *= -1;
-	}
-	if (n < 10)
-		ft_putchar(n + '0');
-	else
-	{
-		ft_putnbr(n / 10);
-		ft_putchar((n % 10) + '0');
-	}
+	return (dst);
 }

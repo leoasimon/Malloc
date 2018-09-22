@@ -1,19 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
+/*   ft_print_unsigned_long.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsimon <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/05 10:47:14 by lsimon            #+#    #+#             */
-/*   Updated: 2016/11/23 16:37:24 by lsimon           ###   ########.fr       */
+/*   Created: 2018/09/22 10:51:27 by lsimon            #+#    #+#             */
+/*   Updated: 2018/09/22 12:30:04 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include "libft.h"
+#include "malloc.h"
 
-void	ft_putchar_fd(char c, int fd)
+void	ft_print_unsigned_long(size_t n)
 {
-	write(fd, &c, 1);
+	const unsigned char rem = n % 10;
+
+	if (n >= 10)
+		ft_print_unsigned_long(n / 10);
+	ft_putchar(rem + 48);
 }

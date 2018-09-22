@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_unsigned_long.c                           :+:      :+:    :+:   */
+/*   ft_print_addr.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/22 10:51:27 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/22 11:03:30 by lsimon           ###   ########.fr       */
+/*   Created: 2018/09/17 10:04:50 by lsimon            #+#    #+#             */
+/*   Updated: 2018/09/22 12:29:42 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "malloc.h"
 
-void	ft_print_unsigned_long(size_t n)
+void	print_hex(int value)
 {
-	const unsigned char rem = n % 10;
+	char const *base = "0123456789abcdef";
 
-	if (n >= 10)
-		ft_print_unsigned_long(n / 10);
-	ft_putchar(rem + 48);
+	if (value / 16 > 1)
+		print_hex(value / 16);
+	write(1, base + value % 16, 1);
+}
+
+void	ft_print_addr(void *addr)
+{
+	if (addr)
+	{
+		ft_putstr("0x10");
+		print_hex((int)addr);
+	}
 }

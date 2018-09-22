@@ -34,6 +34,11 @@ SRC			+= init.c
 SRC			+= show_alloc_mem.c
 SRC			+= free.c
 SRC			+= realloc.c
+SRC			+= ft_print_addr.c
+SRC			+= ft_print_unsigned_long.c
+SRC			+= ft_putstr.c
+SRC			+= ft_putchar.c
+SRC			+= ft_memcpy.c
 
 OBJ_PATH 	= ./obj/
 OBJ_NAME 	= $(SRC:.c=.o)
@@ -52,14 +57,11 @@ $(OBJ_PATH)%.o: %.c
 # Make shared library from object files
 # symlink to simplified library name
 $(NAME): $(OBJ)
-	@$(CC) -shared -fPIC -o $(NAME) $(OBJ) -L libft -lft
+	@$(CC) -shared -fPIC -o $(NAME) $(OBJ)
 	@ln -s $(NAME) libft_malloc.so
 	@echo "[MALLOC compiled.]\n"
 
 all: $(NAME)
-
-libft:
-	@make -C libft/ all
 
 clean:
 	@rm -rf $(OBJ_PATH)

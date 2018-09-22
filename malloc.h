@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   malloc.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekelen <ekelen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 15:37:55 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/22 10:48:05 by ekelen           ###   ########.fr       */
+/*   Updated: 2018/09/22 12:34:38 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <sys/mman.h>
 # include <stdio.h>
-# include "libft/libft.h"
+# include <unistd.h>
 
 typedef struct	s_malloc
 {
@@ -56,6 +56,12 @@ void			*malloc(size_t req_size);
 void			*realloc(void *ptr, size_t req_size);
 void			free(void *ptr);
 void			show_alloc_mem(void);
+
+void			ft_putchar(char c);
+void			ft_putstr(char *str);
+void			*ft_memcpy(void *dst, const void *src, size_t n);
+void			ft_print_addr(void *addr);
+void			ft_print_unsigned_long(size_t n);
 
 t_malloc		*init_malloc(void *addr, size_t req_size);
 t_stock			*init_stock(int chunk_size);
