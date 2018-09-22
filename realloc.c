@@ -6,7 +6,7 @@
 /*   By: ekelen <ekelen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 09:43:28 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/20 14:19:05 by ekelen           ###   ########.fr       */
+/*   Updated: 2018/09/22 12:25:13 by ekelen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static t_malloc *find_ptr_in_mallocs(void *ptr, t_malloc *curr, int *err)
 	
 	if (ptr == (void *)curr->ret_ptr && !curr->is_free) return curr;
 	else if (
-		ptr > (void *)curr->ret_ptr && 
-		ptr <= (void *)curr->ret_ptr + curr->len)
+		ptr >= (void *)curr && 
+		ptr < (void *)curr->ret_ptr + curr->len)
 		{
 			*err = 1;
 			return NULL;
@@ -61,13 +61,12 @@ static t_malloc	*locate_ptr(void *ptr, int *err)
 static void clear_allocated_mem(t_malloc	*ptr)
 {
 	ptr->is_free = 1;
-	// ft_bzero(ptr->ret_ptr, ptr->len); // ??
 }
 
 void	*realloc(void	*ptr, size_t size)
 {
 	t_malloc		*found_malloc;
-	t_malloc		*new_malloc;
+	void			*new_malloc;
 	int			 	err;
 	
 	new_malloc = NULL;
