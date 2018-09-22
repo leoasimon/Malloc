@@ -39,6 +39,7 @@ SRC			+= ft_print_unsigned_long.c
 SRC			+= ft_putstr.c
 SRC			+= ft_putchar.c
 SRC			+= ft_memcpy.c
+SRC			+= malloc2.c
 
 OBJ_PATH 	= ./obj/
 OBJ_NAME 	= $(SRC:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 15:37:55 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/22 12:34:38 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/22 13:06:03 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ typedef struct	s_manager
 	t_malloc	*large;
 }				t_manager;
 
-typedef enum {
+typedef enum	e_sizetype {
 	TINY = 128,
 	SMALL = 1204,
-} e_sizetype;
+}				t_sizetype;
 
 extern t_manager	g_manager;
 
@@ -63,8 +63,15 @@ void			*ft_memcpy(void *dst, const void *src, size_t n);
 void			ft_print_addr(void *addr);
 void			ft_print_unsigned_long(size_t n);
 
+void			*retrieve_large_tail(t_malloc *curr);
+void			*get_ret_ptr(t_malloc *curr, size_t s, size_t *free_bits);
+void			*ret_c(t_stock *stock, size_t req_size);
+
 t_malloc		*init_malloc(void *addr, size_t req_size);
 t_stock			*init_stock(int chunk_size);
 t_malloc		*init_large_mmap(size_t req_size);
+
+t_malloc		*get_updated_head(t_malloc *curr,\
+				size_t req_size, void *pot_addr);
 
 #endif

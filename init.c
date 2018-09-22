@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/10 11:52:59 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/22 11:41:08 by lsimon           ###   ########.fr       */
+/*   Updated: 2018/09/22 13:04:18 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,12 @@ t_malloc			*init_malloc(void *addr, size_t req_size)
 t_malloc			*init_large_mmap(size_t req_size)
 {
 	t_malloc		*mem_ptr;
-	const size_t	optimal_size = ((size_t)((req_size + sizeof(t_malloc)) / getpagesize()) + 1) * getpagesize();
-	
+	size_t			optimal_size;
+
+	optimal_size = ((size_t)((req_size + sizeof(t_malloc))\
+	/ getpagesize()) + 1) * getpagesize();
 	if (optimal_size < req_size)
-		return NULL;
+		return (NULL);
 	if ((mem_ptr = (t_malloc *)\
 		mmap(NULL, optimal_size, PROT_READ | PROT_WRITE,\
 		MAP_ANON | MAP_PRIVATE, -1, 0)) == MAP_FAILED)
@@ -68,6 +70,5 @@ t_stock				*init_stock(int chunk_size)
 		stock->free_bits = optimal_size - sizeof(t_stock);
 		stock->len = optimal_size;
 	}
-
 	return (stock);
 }

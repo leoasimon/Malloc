@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   show_alloc_mem.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekelen <ekelen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/17 11:31:30 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/22 11:11:49 by ekelen           ###   ########.fr       */
+/*   Updated: 2018/09/22 13:01:23 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-t_manager	g_manager;
+t_manager		g_manager;
 
-static void print_heap_header(t_malloc *heap, e_sizetype sizetype)
+static void		print_heap_header(t_malloc *heap, t_sizetype sizetype)
 {
 	if (sizetype == TINY)
 		ft_putstr("TINY : ");
@@ -26,7 +26,8 @@ static void print_heap_header(t_malloc *heap, e_sizetype sizetype)
 	ft_putchar('\n');
 }
 
-static void	print_mallocs(t_malloc *curr, e_sizetype sizetype, int *total, int start)
+static void		print_mallocs(t_malloc *curr,\
+				t_sizetype sizetype, int *total, int start)
 {
 	if (curr)
 	{
@@ -47,7 +48,7 @@ static void	print_mallocs(t_malloc *curr, e_sizetype sizetype, int *total, int s
 	}
 }
 
-void		show_alloc_mem(void)
+void			show_alloc_mem(void)
 {
 	int	total;
 
@@ -57,7 +58,7 @@ void		show_alloc_mem(void)
 	if (g_manager.small)
 		print_mallocs(g_manager.small->head, SMALL, &total, 1);
 	if (g_manager.large)
-		print_mallocs(g_manager.large, (e_sizetype)NULL, &total, 1);
+		print_mallocs(g_manager.large, (t_sizetype)NULL, &total, 1);
 	ft_putstr("TOTAL: ");
 	ft_print_unsigned_long(total);
 	ft_putstr(" octets\n");
