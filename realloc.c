@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   realloc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekelen <ekelen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ekelen <ekelen@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 09:43:28 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/22 14:38:33 by ekelen           ###   ########.fr       */
+/*   Updated: 2018/09/23 11:38:04 by ekelen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-static t_malloc		*find_ptr_in_mallocs(void *ptr, t_malloc *curr, int *err)
+static t_block		*find_ptr_in_blocks(void *ptr, t_block *curr, int *err)
 {
 	if (!curr)
 		return (NULL);
@@ -23,10 +23,10 @@ static t_malloc		*find_ptr_in_mallocs(void *ptr, t_malloc *curr, int *err)
 		*err = 1;
 		return (NULL);
 	}
-	return (find_ptr_in_mallocs(ptr, curr->next, err));
+	return (find_ptr_in_blocks(ptr, curr->next, err));
 }
 
-static t_stock		*in_list(void *ptr, t_stock *curr)
+static t_zone		*in_list(void *ptr, t_zone *curr)
 {
 	if (!curr)
 		return (NULL);
@@ -35,19 +35,19 @@ static t_stock		*in_list(void *ptr, t_stock *curr)
 	return (in_list(ptr, curr->next));
 }
 
-static t_malloc		*locate_ptr(void *ptr, int *err)
+static t_block		*locate_ptr(void *ptr, int *err)
 {
-	t_malloc	*found_malloc;
-	t_stock		*list;
+	t_block	*found_block;
+	t_zone		*list;
 
-	found_malloc = NULL;
+	found_block = NULL;
 	list = NULL;
 	if (g_manager.tiny && (list = in_list(ptr, g_manager.tiny)))
-		return (find_ptr_in_mallocs(ptr, list->head, err));
+		return (find_ptr_in_blocks(ptr, list->head, err));
 	else if (g_manager.small && (list = in_list(ptr, g_manager.small)))
-		return (find_ptr_in_mallocs(ptr, list->head, err));
-	else if (g_manager.large && !found_malloc)
-		return (find_ptr_in_mallocs(ptr, g_manager.large, err));
+		return (find_ptr_in_blocks(ptr, list->head, err));
+	else if (g_manager.large && !found_block)
+		return (find_ptr_in_blocks(ptr, g_manager.large, err));
 	else
 		return (NULL);
 }
@@ -60,27 +60,27 @@ void				*handle_no_size(void *ptr)
 
 void				*realloc(void *ptr, size_t size)
 {
-	t_malloc		*found_malloc;
-	void			*new_malloc;
+	t_block		*found_block;
+	void			*new_block;
 	int				err;
 
-	new_malloc = NULL;
+	new_block = NULL;
 	err = 0;
-	found_malloc = locate_ptr(ptr, &err);
-	if (found_malloc)
+	found_block = locate_ptr(ptr, &err);
+	if (found_block)
 	{
 		if (!size)
 			return (handle_no_size(ptr));
-		if (size <= found_malloc->len)
+		if (size <= found_block->len)
 		{
-			found_malloc->len = size;
-			return (found_malloc->ret_ptr);
+			found_block->len = size;
+			return (found_block->ret_ptr);
 		}
-		if (!(new_malloc = malloc(size)))
+		if (!(new_block = malloc(size)))
 			return (NULL);
-		ft_memcpy(new_malloc, ptr, found_malloc->len);
-		found_malloc->is_free = 1;
-		return (new_malloc);
+		ft_memcpy(new_block, ptr, found_block->len);
+		found_block->is_free = 1;
+		return (new_block);
 	}
 	return (err > 0 ? NULL : malloc(size));
 }

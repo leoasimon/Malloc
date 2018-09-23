@@ -6,7 +6,7 @@
 /*   By: ekelen <ekelen@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/17 11:31:30 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/23 11:21:06 by ekelen           ###   ########.fr       */
+/*   Updated: 2018/09/23 11:38:04 by ekelen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_manager	g_manager;
 
-static void	print_heap_header(t_malloc *heap, size_t sizetype)
+static void	print_heap_header(t_block *heap, size_t sizetype)
 {
 	if (sizetype == TINY)
 		ft_putstr("TINY : ");
@@ -26,7 +26,7 @@ static void	print_heap_header(t_malloc *heap, size_t sizetype)
 	ft_putchar('\n');
 }
 
-static void	print_mallocs(t_malloc *curr, size_t st, int *total, int start)
+static void	print_blocks(t_block *curr, size_t st, int *total, int start)
 {
 	if (curr)
 	{
@@ -43,7 +43,7 @@ static void	print_mallocs(t_malloc *curr, size_t st, int *total, int start)
 			*total += curr->len;
 			start = 0;
 		}
-		print_mallocs(curr->next, st, total, start);
+		print_blocks(curr->next, st, total, start);
 	}
 }
 
@@ -53,11 +53,11 @@ void		show_alloc_mem(void)
 
 	total = 0;
 	if (g_manager.tiny)
-		print_mallocs(g_manager.tiny->head, TINY, &total, 1);
+		print_blocks(g_manager.tiny->head, TINY, &total, 1);
 	if (g_manager.small)
-		print_mallocs(g_manager.small->head, SMALL, &total, 1);
+		print_blocks(g_manager.small->head, SMALL, &total, 1);
 	if (g_manager.large)
-		print_mallocs(g_manager.large, -1, &total, 1);
+		print_blocks(g_manager.large, -1, &total, 1);
 	ft_putstr("TOTAL: ");
 	ft_print_unsigned_long(total);
 	ft_putstr(" octets\n");

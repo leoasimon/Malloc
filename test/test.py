@@ -114,7 +114,7 @@ cmp_output("test4", "Bonjours\n")
 # For this test to work, you need to have the libmalloc_darwin...
 # in the current directory.
 print("#####Test print_alloc_mem")
-com = "gcc"+ " -L../ " + " -Wall -Wno-unused-result -o " + bin_folder + "test5" + " " + "test5.c" + " -lft_malloc"
+com = "gcc"+ " -L../ " + " -Wall -Wno-unused-result -o " + bin_folder + "test5" + " " + "test5.c" + " -lft_block"
 cmd.call(com.split())
 com = "./" + bin_folder + "test5"
 output = cmd_output_only(com.split())

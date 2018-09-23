@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekelen <ekelen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ekelen <ekelen@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/22 14:04:12 by ekelen            #+#    #+#             */
-/*   Updated: 2018/09/22 14:05:09 by ekelen           ###   ########.fr       */
+/*   Updated: 2018/09/23 11:39:12 by ekelen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-static void			*get_next(t_malloc *curr)
+static void			*get_next(t_block *curr)
 {
 	if (curr && curr->is_free)
 		return (get_next(curr->next));
 	return (curr);
 }
 
-static void			*find_alloc_in_list(void *ptr, t_malloc *curr, t_malloc *s)
+static void			*find_alloc_in_list(void *ptr, t_block *curr, t_block *s)
 {
 	if (!curr)
 		return (NULL);
@@ -36,23 +36,23 @@ static void			*find_alloc_in_list(void *ptr, t_malloc *curr, t_malloc *s)
 	return (find_alloc_in_list(ptr, curr->next, s));
 }
 
-static void			*free_and_update(t_stock *curr, void *ptr)
+static void			*free_and_update(t_zone *curr, void *ptr)
 {
-	t_malloc	*found_ptr;
-	t_stock		*next;
+	t_block	*found_ptr;
+	t_zone		*next;
 
 	if (curr)
 	{
 		if (ptr > (void *)curr && ptr < (void *)curr + curr->len)
 		{
-			found_ptr = (t_malloc *)find_alloc_in_list(ptr, curr->head, NULL);
+			found_ptr = (t_block *)find_alloc_in_list(ptr, curr->head, NULL);
 			if (found_ptr)
 			{
 				if (found_ptr == curr->head && found_ptr->next == NULL && \
-				curr->free_bits < SMALL)
+				curr->free_bytes < SMALL)
 				{
 					next = curr->next;
-					munmap(curr, curr->len + sizeof(t_malloc));
+					munmap(curr, curr->len + sizeof(t_block));
 					return (next);
 				}
 				found_ptr->is_free = 1;
@@ -64,16 +64,16 @@ static void			*free_and_update(t_stock *curr, void *ptr)
 	return (curr);
 }
 
-static void			*free_and_update_lg(t_malloc *curr, void *ptr)
+static void			*free_and_update_lg(t_block *curr, void *ptr)
 {
-	t_malloc	*next;
+	t_block	*next;
 
 	if (curr)
 	{
 		if (curr->ret_ptr == ptr)
 		{
 			next = curr->next;
-			munmap(curr, sizeof(t_malloc) + curr->len);
+			munmap(curr, sizeof(t_block) + curr->len);
 			return (next);
 		}
 		curr->next = free_and_update_lg(curr->next, ptr);

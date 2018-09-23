@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   handle_large.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekelen <ekelen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ekelen <ekelen@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/22 13:25:18 by ekelen            #+#    #+#             */
-/*   Updated: 2018/09/22 14:33:31 by ekelen           ###   ########.fr       */
+/*   Updated: 2018/09/23 11:38:04 by ekelen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-static t_malloc		*init_large_mmap(size_t req_size)
+static t_block		*init_large_mmap(size_t req_size)
 {
-	t_malloc		*mem_ptr;
+	t_block		*mem_ptr;
 	int				pagesize;
 	size_t			optimal_size;
 
 	pagesize = (size_t)getpagesize();
-	optimal_size = (((req_size + sizeof(t_malloc)) / pagesize) + 1) * pagesize;
+	optimal_size = (((req_size + sizeof(t_block)) / pagesize) + 1) * pagesize;
 	if (optimal_size < req_size)
 		return (NULL);
-	if ((mem_ptr = (t_malloc *)\
+	if ((mem_ptr = (t_block *)\
 		mmap(NULL, optimal_size, PROT_READ | PROT_WRITE,\
 		MAP_ANON | MAP_PRIVATE, -1, 0)) == MAP_FAILED)
 		return (NULL);
@@ -33,9 +33,9 @@ static t_malloc		*init_large_mmap(size_t req_size)
 	return (mem_ptr);
 }
 
-t_malloc			*add_large_node(t_malloc *curr, size_t req_size, int *err)
+t_block			*add_large_node(t_block *curr, size_t req_size, int *err)
 {
-	t_malloc	*new;
+	t_block	*new;
 
 	new = NULL;
 	if (!curr)
@@ -48,7 +48,7 @@ t_malloc			*add_large_node(t_malloc *curr, size_t req_size, int *err)
 	return (curr);
 }
 
-void				*retrieve_large_tail(t_malloc *curr)
+void				*retrieve_large_tail(t_block *curr)
 {
 	if (!curr->next)
 		return (curr->ret_ptr);

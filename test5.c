@@ -10,7 +10,7 @@ int main()
    show_alloc_mem();
    return (0);
 }
-// $&gt; gcc -o test5 test5.c -L. -lft_malloc
+// $&gt; gcc -o test5 test5.c -L. -lft_block
 // $&gt; ./test5
 
 // L'affichage correspond au sujet et à la répartition TINY/SMALL/LARGE du projet ?

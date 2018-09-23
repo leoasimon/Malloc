@@ -1,4 +1,4 @@
-# ================ MAKEFILE: libft_malloc
+# ================ MAKEFILE: libft_block
 
 ifeq ($(HOSTTYPE),)
 	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
@@ -6,7 +6,7 @@ endif
 
 .PHONY: all, clean, fclean, re
 
-NAME		= libft_malloc_$(HOSTTYPE).so
+NAME		= libft_block_$(HOSTTYPE).so
 
 CC 			:= gcc
 
@@ -41,14 +41,14 @@ $(OBJ_PATH)%.o: %.c
 # symlink to simplified library name
 $(NAME): $(OBJ)
 	@$(CC) -shared -fPIC -o $(NAME) $(OBJ)
-	@ln -s $(NAME) libft_malloc.so
+	@ln -s $(NAME) libft_block.so
 	@echo "[MALLOC compiled.]\n"
 
 all: $(NAME)
 
 clean:
 	@rm -rf $(OBJ_PATH)
-	@rm -f libft_malloc.so
+	@rm -f libft_block.so
 
 fclean: clean
 	@rm -rf $(NAME)

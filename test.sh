@@ -37,7 +37,7 @@ echo "$MAGENTA \n----------ours----------\n $RESET"
 ./run.sh /usr/bin/time -l ./test2
 
 echo "\n$GREEN +++++++++  TEST3 (REALLOC) ++++++++++ $RESET"
-gcc -o test3 test3.c -L. -lft_malloc -g
+gcc -o test3 test3.c -L. -lft_block -g
 echo "$BLUE ----------stdlib---------- $RESET"
 ./test3
 
@@ -61,7 +61,7 @@ echo "$MAGENTA \n----------ours----------\n $RESET"
 ./run.sh ./test4
 
 echo "\n$GREEN +++++++++  TEST5 (FREE + REALLOC) ++++++++++ $RESET"
-gcc -o test5 test5.c -L. -lft_malloc -g
+gcc -o test5 test5.c -L. -lft_block -g
 echo "$BLUE ----------stdlib---------- $RESET"
 echo "(NOT APPLICABLE)\n"
 
