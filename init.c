@@ -6,7 +6,7 @@
 /*   By: ekelen <ekelen@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/10 11:52:59 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/23 08:58:45 by ekelen           ###   ########.fr       */
+/*   Updated: 2018/09/23 11:20:11 by ekelen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern t_manager	g_manager;
 
-static size_t		get_optimal_size(t_stype chunk_size)
+static size_t		get_optimal_size(size_t chunk_size)
 {
 	size_t initial;
 

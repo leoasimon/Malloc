@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   malloc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekelen <ekelen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ekelen <ekelen@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 10:39:23 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/22 14:23:59 by ekelen           ###   ########.fr       */
+/*   Updated: 2018/09/23 11:19:12 by ekelen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 t_manager	g_manager;
 
-static t_stock		*get_linked(t_stock *curr, t_stype sz, int *err)
+static t_stock		*get_linked(t_stock *curr, size_t st, int *err)
 {
 	t_stock	*new;
 
 	if (!curr)
 	{
-		new = init_stock(sz);
+		new = init_stock(st);
 		*err = new ? *err : *err + 1;
 		return (new);
 	}
-	if (curr->free_bits < (size_t)sz + sizeof(t_malloc))
-		curr->next = get_linked(curr->next, sz, err);
+	if (curr->free_bits < (size_t)st + sizeof(t_malloc))
+		curr->next = get_linked(curr->next, st, err);
 	return (curr);
 }
 

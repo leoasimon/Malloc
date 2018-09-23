@@ -6,7 +6,7 @@
 /*   By: ekelen <ekelen@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 15:37:55 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/23 08:56:35 by ekelen           ###   ########.fr       */
+/*   Updated: 2018/09/23 11:19:44 by ekelen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,6 @@ typedef struct		s_manager
 	t_malloc	*large;
 }					t_manager;
 
-typedef enum		e_stype {
-	TINY,
-	SMALL
-}					t_stype;
-
 extern t_manager	g_manager;
 
 void				ft_putchar(char c);
@@ -66,6 +61,6 @@ t_malloc			*get_updated_head(t_malloc *curr, size_t rsz, void *addr);
 void				*retrieve_chunk(t_stock *stock, size_t req_size);
 t_stock				*get_usable_stock(t_stock *curr, size_t req_size);
 t_malloc			*init_malloc(void *addr, size_t req_size);
-t_stock				*init_stock(t_stype chunk_size);
+t_stock				*init_stock(size_t sizetype);
 
 #endif
