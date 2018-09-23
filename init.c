@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekelen <ekelen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ekelen <ekelen@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/10 11:52:59 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/22 14:34:04 by ekelen           ###   ########.fr       */
+/*   Updated: 2018/09/23 08:58:45 by ekelen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ t_malloc			*init_malloc(void *addr, size_t req_size)
 	return (m_malloc);
 }
 
-t_stock				*init_stock(t_stype chunk_size)
+t_stock				*init_stock(size_t sizetype)
 {
 	t_stock		*stock;
 	size_t		optimal_size;
 
-	optimal_size = get_optimal_size(chunk_size);
+	optimal_size = get_optimal_size(sizetype);
 	if ((stock = (t_stock *)\
 		mmap(NULL, optimal_size, PROT_READ | PROT_WRITE,\
 		MAP_ANON | MAP_PRIVATE, -1, 0)))

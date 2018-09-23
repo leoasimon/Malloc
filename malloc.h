@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   malloc.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekelen <ekelen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ekelen <ekelen@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 15:37:55 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/22 14:37:27 by ekelen           ###   ########.fr       */
+/*   Updated: 2018/09/23 08:56:35 by ekelen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <unistd.h>
 
 # define NB_CHUNKS 100
+# define TINY 128
+# define SMALL 1204
 
 typedef struct		s_malloc
 {
@@ -43,8 +45,8 @@ typedef struct		s_manager
 }					t_manager;
 
 typedef enum		e_stype {
-	TINY = 128,
-	SMALL = 1204,
+	TINY,
+	SMALL
 }					t_stype;
 
 extern t_manager	g_manager;
