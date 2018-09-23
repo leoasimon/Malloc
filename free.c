@@ -6,7 +6,7 @@
 /*   By: ekelen <ekelen@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/22 14:04:12 by ekelen            #+#    #+#             */
-/*   Updated: 2018/09/23 11:39:12 by ekelen           ###   ########.fr       */
+/*   Updated: 2018/09/23 12:31:02 by ekelen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ static void			*get_next(t_block *curr)
 	return (curr);
 }
 
+/*
+** get list of contiguous freed blocks
+*/
 static void			*find_alloc_in_list(void *ptr, t_block *curr, t_block *s)
 {
 	if (!curr)
@@ -36,14 +39,17 @@ static void			*find_alloc_in_list(void *ptr, t_block *curr, t_block *s)
 	return (find_alloc_in_list(ptr, curr->next, s));
 }
 
+/*
+** munmap zone if alloc'd enough and update previous pointer
+*/
 static void			*free_and_update(t_zone *curr, void *ptr)
 {
-	t_block	*found_ptr;
+	t_block		*found_ptr;
 	t_zone		*next;
 
 	if (curr)
 	{
-		if (ptr > (void *)curr && ptr < (void *)curr + curr->len)
+		if (ptr >= (void *)curr && ptr < curr->end)
 		{
 			found_ptr = (t_block *)find_alloc_in_list(ptr, curr->head, NULL);
 			if (found_ptr)
@@ -64,6 +70,9 @@ static void			*free_and_update(t_zone *curr, void *ptr)
 	return (curr);
 }
 
+/*
+** munmap large malloc and update previous pointer
+*/
 static void			*free_and_update_lg(t_block *curr, void *ptr)
 {
 	t_block	*next;

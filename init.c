@@ -6,11 +6,12 @@
 /*   By: ekelen <ekelen@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/10 11:52:59 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/23 11:38:04 by ekelen           ###   ########.fr       */
+/*   Updated: 2018/09/23 12:14:43 by ekelen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
+#include <stdio.h>
 
 extern t_manager	g_manager;
 
@@ -49,6 +50,8 @@ t_zone				*init_zone(size_t sizetype)
 		zone->next = NULL;
 		zone->free_bytes = optimal_size - sizeof(t_zone);
 		zone->len = optimal_size;
+		zone->end = ((char*)zone + optimal_size);
 	}
+
 	return (zone);
 }

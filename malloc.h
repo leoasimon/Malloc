@@ -6,7 +6,7 @@
 /*   By: ekelen <ekelen@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 15:37:55 by lsimon            #+#    #+#             */
-/*   Updated: 2018/09/23 11:38:30 by ekelen           ###   ########.fr       */
+/*   Updated: 2018/09/23 12:14:47 by ekelen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,12 @@ typedef struct		s_block
 
 typedef struct		s_zone
 {
-	t_block			*head;
+	t_block				*head;
 	struct s_zone		*next;
 	size_t				free_bytes;
 	size_t				len;
+	void				*end;
+	int					(*fits)(void*, void*, size_t);
 }					t_zone;
 
 typedef struct		s_manager
